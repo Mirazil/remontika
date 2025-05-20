@@ -183,15 +183,15 @@ export default function Home() {
         </div>
       </section>
       {/* === Секция "Що ми ремонтуємо?" === */}
-      <section id="services" className="mx-auto max-w-7xl px-4 py-24">
-        <h2 className="text-3xl font-extrabold text-text text-center mb-8">
+      <section id="services" className="mx-auto max-w-7xl px-4 py-24 ">
+        <h2 className="text-3xl font-extrabold text-text text-center mb-8 ">
           Що ми ремонтуємо?
         </h2>
 
         {/* Белый контейнер с тенью ↓ */}
         <div className="bg-white rounded-3xl flex justify-center p-8 shadow-[14px_4px_4px_rgba(0,0,0,0.1)]">
           {/* Сетка 1/2/3 колонки */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ">
             <ServiceItem
               icon="/images/items/rep_smart.png"
               title="Ремонт мобільних телефонів"
