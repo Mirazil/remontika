@@ -10,8 +10,8 @@ export default function Header() {
           alt="Remontika"
           className="h-15 w-auto select-none"
         />
-        <nav className="flex-1 hidden lg:flex justify-center gap-14  text-[#303030] text-sm font-light">
-          <a href="#about">Про нас</a>
+        <nav className="flex-1 hidden lg:flex justify-center gap-14  text-[#303030] text-lg font-light">
+          <a href="#benefits">Про нас</a>
           <a href="#services">Перелік ремонту</a>
           <a href="#works">Приклад робіт</a>
           <a href="#reviews">Відгуки</a>

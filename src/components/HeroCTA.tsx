@@ -11,7 +11,7 @@ export default function HeroCTA() {
         aria-hidden
         className="
           absolute inset-0
-          rounded-[28px]
+          rounded-[13px]
           bg-[#1D5CCA]
           translate-y-[8px]
           transition-transform duration-150
@@ -26,9 +26,9 @@ export default function HeroCTA() {
         className="
           relative
           z-10
-          rounded-[28px]
+          rounded-[13px]
           bg-[#2C79FF]
-          px-12 py-5
+          px-12 py-3
           text-white text-lg font-semibold
           transition-transform duration-150
           active:translate-y-[2px]
