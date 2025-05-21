@@ -1,5 +1,7 @@
 'use client'
+
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
 type FaqItemProps = {
@@ -35,15 +37,29 @@ export default function FaqItem({
         )}
       </button>
 
-      {/* Разделитель */}
       <hr className="border-t border-gray-300" />
 
-      {/* Рендерим ответ ТОЛЬКО когда открыт */}
-      {isOpen && (
-        <div className="px-6 pb-4 pt-2 text-sm text-text/80">
-          {answer}
-        </div>
-      )}
+      {/* Здесь — AnimatePresence, чтобы анимировать mount/unmount */}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            key="content"
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open:   { height: 'auto', opacity: 1 },
+              collapsed: { height: 0, opacity: 0 },
+            }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            style={{ overflow: 'hidden' }}
+          >
+            <div className="px-6 pb-4 pt-2 text-sm text-text/80">
+              {answer}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
