@@ -73,7 +73,7 @@ export default function DashboardLayout({ children }:{ children:ReactNode }) {
         <nav className="flex flex-col gap-4 px-6">
 
           <NavButton
-            href="/dashboard"
+            href="/dashboard/page.tsx"
             icon="/dashboard/icons/list.svg"
             label="Мої заявки"
             active={pathname === '/dashboard'}
@@ -81,15 +81,15 @@ export default function DashboardLayout({ children }:{ children:ReactNode }) {
           />
 
           <NavButton
-            href="/dashboard/notifications"
+            href="/dashboard/notify/page.tsx"
             icon="/dashboard/icons/notification.svg"
             label="Метод повідомлення"
-            active={pathname === '/dashboard/notifications'}
-            onClick={() => router.push('/dashboard/notifications')}
+            active={pathname === '/dashboard/notify'}
+            onClick={() => router.push('/dashboard/notify')}
           />
 
           <NavButton
-            href="/dashboard/settings"
+            href="/dashboard/settings/page.tsx"
             icon="/dashboard/icons/settings.svg"
             label="Налаштування"
             active={pathname === '/dashboard/settings'}

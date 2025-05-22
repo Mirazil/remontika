@@ -8,6 +8,8 @@ import { auth } from '@/lib/firebase'
 import PrimaryButton from '@/components/PrimaryButton'
 import { Input } from './auth/Input'
 import { X } from 'lucide-react'
+import { doc, setDoc } from 'firebase/firestore'
+import { db }          from '@/lib/firebase'
 
 type Props = { onClose: () => void }
 type Tab  = 'register' | 'login'
@@ -29,6 +31,8 @@ export default function AuthModal({ onClose }: Props) {
     const password = (f.password as HTMLInputElement).value
     const repeat   = (f.repeat   as HTMLInputElement).value
     const login    = (f.login    as HTMLInputElement).value
+    const phone     = (f.phone    as HTMLInputElement).value
+    
 
     if (password !== repeat) {
       setError('Паролі не співпадають')
@@ -39,6 +43,10 @@ export default function AuthModal({ onClose }: Props) {
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password)
       await updateProfile(cred.user, { displayName: login })
+      await setDoc(
+        doc(db, 'users', cred.user.uid),
+        { phone, address: ''}
+      )
       onClose()
       router.push('/dashboard')
     } catch (e:any) {
@@ -103,7 +111,7 @@ function RegisterForm({ loading, onSubmit }:{loading:boolean,onSubmit:(e:React.F
       <Input name="password" type="password" placeholder="Пароль *" required/>
       <Input name="repeat"   type="password" placeholder="Підтвердження паролю *" required/>
       <Input name="email"    type="email"    placeholder="Email"     required/>
-      <Input name="phone"    type="tel"      placeholder="Номер телефону"/>
+      <Input name="phone"    type="tel"      placeholder="Номер телефону" required/>
       <div className="flex justify-center">
         <PrimaryButton disabled={loading}>
           {loading?'…':'Створити обліковий запис'}
