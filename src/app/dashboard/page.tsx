@@ -1,4 +1,14 @@
 // src/app/dashboard/page.tsx
-export default function DashboardHome() {
-  return <h1 className="text-2xl font-bold">Мої заявки (пока пусто)</h1>
+
+import PlusButton from "./PlusButton"
+import RequestsList from "./RequestsList"
+import "../globals.css"
+
+export default function Dashboard() {
+  return (
+    <main className="px-4 py-8 max-w-7xl mx-auto">
+      <RequestsList />
+      <PlusButton />
+    </main>
+  )
 }
