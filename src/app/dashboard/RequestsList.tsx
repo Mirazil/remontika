@@ -6,6 +6,7 @@ import {
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { db } from '@/lib/firebase'
 import RequestCard from './RequestCard'
+import Spinner from '@/components/Spinner'
 
 export type RequestDoc = {
   id:            string
@@ -52,7 +53,8 @@ export default function RequestsList () {
   }, [])
 
   if (loading)
-    return <p className="text-center text-gray-400 pt-20">Завантаження…</p>
+    return <Spinner/>
+    // return <p className="text-center text-gray-400 pt-20">Завантаження…</p>
 
   if (!docs.length)
     return <p className="text-center text-gray-500 pt-20">

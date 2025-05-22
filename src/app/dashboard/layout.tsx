@@ -6,6 +6,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { useRouter, usePathname }        from 'next/navigation'
 import { onAuthStateChanged, signOut, User } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
+import '../globals.css';
 
 /* ───────── вспомогательный компонент ───────── */
 type NavBtnProps = {
