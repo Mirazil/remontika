@@ -111,7 +111,7 @@ export default function Home() {
           <aside className="flex items-center lg:justify-center">
             <div
               className="
-                    w-full max-w-sm
+                    w-full max-w-sm 
                     rounded-3xl bg-white p-8
                     shadow-[14px_4px_4px_rgba(0,0,0,0.1)]
                   "

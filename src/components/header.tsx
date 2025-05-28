@@ -48,7 +48,7 @@ export default function Header() {
           {/* профиль / вход */}
           <button
             onClick={handleProfileClick}
-            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full"
+            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full cursor-pointer"
           >
             <img src="/images/my_account_button.svg" alt="account" className="h-15"/>
           </button>
