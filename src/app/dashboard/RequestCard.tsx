@@ -15,6 +15,7 @@ import { doc, updateDoc } from 'firebase/firestore'
 import { db }             from '@/lib/firebase'
 import type { RequestDoc } from './RequestsList'
 import { JSX }            from 'react'
+import Spinner from '@/components/Spinner'
 
 /* палітра статусів */
 const PALETTE: Record<
@@ -65,6 +66,18 @@ interface CardProps extends RequestDoc {
 
 export default function RequestCard(r: CardProps) {
   const pal = PALETTE[r.status] ?? PALETTE.pending
+
+  
+  /* ---------------- state для preview ---------------- */
+  const [selected,  setSelected]  = useState(0)     // активне фото
+  const [zoom,      setZoom]      = useState(false) // показ модалки
+  const [imgLoaded, setImgLoaded] = useState(false) // чи завантажилась <img>
+  
+    const openZoom = (idx: number) => {
+    setSelected(idx)
+    setImgLoaded(false)   // починаємо з «loader»
+    setZoom(true)
+  }
 
   /* ------------------------------------------------------------------ */
   /*  компактий режим (використовується у “/dashboard/all”)              */
@@ -119,8 +132,7 @@ export default function RequestCard(r: CardProps) {
   /*  докладна картка                                                   */
   /* ------------------------------------------------------------------ */
 
-  const [selected, setSelected] = useState(0)       // активне фото
-  const [zoom, setZoom]         = useState(false)   // модальне Preview
+
 
   async function confirmDone() {
     await updateDoc(doc(db, 'requests', r.id), { status: 'done' })
@@ -186,11 +198,11 @@ export default function RequestCard(r: CardProps) {
               width={180}
               height={180}
               priority
-              onClick={() => setZoom(true)}
+              onClick={() => openZoom(selected)}
               className="h-40 w-40 rounded-2xl object-cover cursor-pointer"
             />
 
-            {/* вертикальна колонка ескізів — тільки якщо фото > 1 */}
+            {/* ескізи */}
             {r.photos.length > 1 && (
               <div className="flex flex-col gap-2">
                 {r.photos.map((p, i) => (
@@ -200,7 +212,7 @@ export default function RequestCard(r: CardProps) {
                     alt=""
                     width={40}
                     height={40}
-                    onClick={() => setSelected(i)}
+                    onClick={() => openZoom(i)}
                     className={clsx(
                       'h-10 w-10 rounded-lg object-cover cursor-pointer',
                       i === selected && 'ring-2 ring-[#2C79FF]',
@@ -224,30 +236,39 @@ export default function RequestCard(r: CardProps) {
         </time>
       </article>
 
-      {/* ----------------------- модальне збільшення ------------------- */}
-      {zoom && (
-        <div
-          className="
-            fixed inset-0 z-50 flex items-center justify-center
-            bg-black/60 backdrop-blur-sm
-          "
-          onClick={() => setZoom(false)}
-        >
-          <img
-            src={r.photos[selected]}
-            className="max-h-[90vh] max-w-[90vw] rounded-lg"
-          />
-          <button
-            className="
-              absolute top-4 right-4 flex h-10 w-10 items-center justify-center
-              rounded-full bg-white text-gray-700 cursor-pointer
-            "
-            onClick={() => setZoom(false)}
-          >
-            <X />
-          </button>
-        </div>
-      )}
+  {/* ----------------------- модальне збільшення ------------------- */}
+  {zoom && (
+    <div
+      className="
+        fixed inset-0 z-50 flex items-center justify-center
+        bg-black/60 backdrop-blur-sm
+      "
+      onClick={() => setZoom(false)}
+    >
+      {/* spinner поки <img> не заванта­житься */}
+      {!imgLoaded && <Spinner />}
+
+      <img
+        src={r.photos[selected]}
+        onLoad={() => setImgLoaded(true)}
+        className={clsx(
+          'max-h-[90vh] max-w-[90vw] rounded-lg transition-opacity',
+          imgLoaded ? 'opacity-100' : 'opacity-0'
+        )}
+      />
+
+      {/* кнопка закриття */}
+      <button
+        className="
+          absolute top-4 right-4 flex h-10 w-10 items-center justify-center
+          rounded-full bg-white text-gray-700
+        "
+        onClick={() => setZoom(false)}
+      >
+        <X />
+      </button>
+    </div>
+  )}
     </>
   )
 }
