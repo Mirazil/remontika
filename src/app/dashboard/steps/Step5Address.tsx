@@ -1,6 +1,10 @@
-// src/app/(dashboard)/steps/Step5Address.tsx
+/* ───────── src/app/(dashboard)/steps/Step5Address.tsx ───────── */
 'use client'
 
+import { useEffect }   from 'react'
+import { getAuth }     from 'firebase/auth'
+import { doc, getDoc } from 'firebase/firestore'
+import { db }          from '@/lib/firebase'
 import { ChevronLeft, ChevronRight, Ban } from 'lucide-react'
 import type { NewRequest } from '@/types/request'
 
@@ -11,58 +15,63 @@ interface Props {
   back: () => void
 }
 
-/* -------------------------------------------------------------------------- */
-/*                               COMPONENT                                    */
-/* -------------------------------------------------------------------------- */
+export default function Step5Address({ data, setData, next, back }: Props) {
 
-export default function Step5Address ({
-  data,
-  setData,
-  next,
-  back,
-}: Props) {
-  /* --- helpers --- */
+  /* ---------- ONE-SHOT prefilling із профілю ---------- */
+  useEffect(() => {
+    // якщо вже щось введено – нічого не робимо
+    if (data.address.trim() || data.selfDelivery) return;
+
+    const uid = getAuth().currentUser?.uid;
+    if (!uid) return;
+
+    (async () => {
+      const snap = await getDoc(doc(db, 'users', uid));
+      if (snap.exists()) {
+        const prof = snap.data() as { address?: string };
+        if (prof.address?.trim()) {
+          setData(prev => ({ ...prev, address: prof.address!.trim() }));
+        }
+      }
+    })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /* ---------- helpers ---------- */
   const save = (v: string) =>
-    setData(prev => ({ ...prev, address: v, selfDelivery: false }))
+    setData(prev => ({ ...prev, address: v, selfDelivery: false }));
 
   const toggleSelf = () =>
     setData(prev => ({
       ...prev,
       selfDelivery: !prev.selfDelivery,
       address: '',
-    }))
+    }));
 
-  /* кнопка «далі» активна, якщо: введена адреса - або вибрано selfDelivery */
-  const canNext = data.selfDelivery || data.address.trim().length > 3
+  const canNext = data.selfDelivery || data.address.trim().length > 3;
 
+  /* ---------- UI ---------- */
   return (
     <>
-      {/* заголовок */}
-      <h2 className="mb-2 text-center text-2xl font-bold">
-        Вкажіть свою адресу
-      </h2>
+      <h2 className="mb-2 text-center text-2xl font-bold">Вкажіть свою адресу</h2>
       <p className="mb-8 text-center text-sm text-text/70">
         Кур’єр отримає ваш пристрій та&nbsp;доставить до нашого сервісу
       </p>
 
-      {/* адресний інпут */}
       <input
         disabled={data.selfDelivery}
         value={data.address}
-        onChange={(e) => save(e.target.value)}
+        onChange={e => save(e.target.value)}
         placeholder="вул. Солом’янська 7"
         className={`
-          mx-auto mb-6 block w-80 rounded-full border
-          border-[#2C79FF]/40 px-4 py-2 text-center outline-none
-          focus:ring-2 focus:ring-[#2C79FF]
+          mx-auto mb-6 block w-80 rounded-full border border-[#2C79FF]/40
+          px-4 py-2 text-center outline-none focus:ring-2 focus:ring-[#2C79FF]
           ${data.selfDelivery && 'opacity-40'}
         `}
       />
 
-      {/* або */}
       <p className="mb-4 text-center font-semibold">або</p>
 
-      {/* кнопка «доставлю сам» */}
       <button
         type="button"
         onClick={toggleSelf}
@@ -73,13 +82,11 @@ export default function Step5Address ({
             : 'border-red-500 text-red-600 hover:bg-red-50'}
         `}
       >
-        <Ban size={18} />
-        Доставлю сам
+        <Ban size={18}/> Доставлю сам
       </button>
 
       {/* навігація */}
       <div className="relative mt-12 w-full">
-        {/* ← */}
         <button
           type="button"
           onClick={back}
@@ -89,10 +96,9 @@ export default function Step5Address ({
             text-[#2C79FF] hover:bg-[#2C79FF]/10
           "
         >
-          <ChevronLeft />
+          <ChevronLeft/>
         </button>
 
-        {/* → */}
         <button
           type="button"
           disabled={!canNext}
@@ -103,11 +109,9 @@ export default function Step5Address ({
             hover:bg-[#1D5CCA] disabled:opacity-40 disabled:cursor-not-allowed
           "
         >
-          <ChevronRight />
+          <ChevronRight/>
         </button>
       </div>
-
-
     </>
-  )
+  );
 }
