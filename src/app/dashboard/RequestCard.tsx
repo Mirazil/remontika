@@ -178,23 +178,23 @@ export default function RequestCard(r: CardProps) {
           )}
         </div>
 
-        {/* -------- фото -------- */}
+        {/* -------- фото + мініатюри -------- */}
         {r.photos.length > 0 && (
-          <div className="flex flex-col items-center gap-2 shrink-0 self-start">
-            {/* головне / збільшене фото */}
+          <div className="flex items-start gap-2 shrink-0 self-start">
+            {/* головне фото */}
             <Image
               src={r.photos[selected]}
               alt=""
               width={180}
               height={180}
-              className="h-40 w-40 rounded-2xl object-cover cursor-pointer"
-              onClick={() => setZoom(true)}
               priority
+              onClick={() => setZoom(true)}
+              className="h-40 w-40 rounded-2xl object-cover cursor-pointer"
             />
 
-            {/* ескізи, якщо фото > 1 */}
+            {/* вертикальна колонка ескізів — тільки якщо фото > 1 */}
             {r.photos.length > 1 && (
-              <div className="mt-1 flex gap-2">
+              <div className="flex flex-col gap-2">
                 {r.photos.map((p, i) => (
                   <Image
                     key={i}
