@@ -73,10 +73,10 @@ export default function RequestCard(r: CardProps) {
     return (
       <article
         className={clsx(
-          'rounded-full border-2',
+          "rounded-full border-2",
           pal.border,
           pal.bg,
-          'px-6 py-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-8',
+          "px-6 py-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-8"
         )}
       >
         <div className="flex-1 ml-8 space-y-1">
@@ -85,17 +85,15 @@ export default function RequestCard(r: CardProps) {
           <div className="grid gap-x-8 gap-y-1 sm:grid-cols-2">
             <p>
               <b>Марка:</b> {r.brand}
+              <p>
+                <b>Модель:</b> {r.model}
+              </p>
             </p>
             <p>
-              <b>Адреса:</b>{' '}
-              {r.address === 'self' ? 'Доставлю сам' : r.address}
-            </p>
-
-            <p>
-              <b>Модель:</b> {r.model}
+              <b>Коментарі:</b> {r.description || "—"}
             </p>
             <p>
-              <b>Коментарі:</b> {r.description || '—'}
+              <b>Адреса:</b> {r.address === "self" ? "Доставлю сам" : r.address}
             </p>
           </div>
 
@@ -104,17 +102,17 @@ export default function RequestCard(r: CardProps) {
           </p>
         </div>
 
-        <time className="shrink-0 text-sm text-gray-500 mt-auto sm:mt-1">
-          {r.createdAt?.toDate().toLocaleString('uk-UA', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
+        <time className="shrink-0 text-sm text-gray-500 mr-8 mt-auto sm:mt-1">
+          {r.createdAt?.toDate().toLocaleString("uk-UA", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
           })}
         </time>
       </article>
-    )
+    );
   }
 
   /* ------------------------------------------------------------------ */
