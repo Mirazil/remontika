@@ -24,7 +24,7 @@ function NavButton({ href, icon, label, active, onClick }: NavBtnProps) {
     <button
       onClick={onClick}
       className={`
-        group flex w-full items-center gap-3 rounded-full border
+        group flex w-full items-center gap-3 rounded-full border cursor-pointer
         border-[#2C79FF] px-6 py-3 text-left transition
         shadow-[0_4px_4px_rgba(44,121,255,0.4)]
         ${active ? 'bg-[#005dff1f]' : 'bg-white hover:bg-[#005dff0d]'}
@@ -157,7 +157,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             active={pathname === '/dashboard/notify'}
             onClick={() => router.push('/dashboard/notify')}
           />
-          <NavButton
+          <NavButton 
             href="/dashboard/settings"
             icon="/dashboard/icons/settings.svg"
             label="Налаштування"
@@ -169,7 +169,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <div className="mt-auto flex flex-col items-center gap-6 p-6">
           <button
             onClick={() => signOut(auth)}
-            className="mx-auto flex items-center gap-2 rounded-full border border-[#2C79FF] px-8 py-3 text-sm font-semibold shadow-[0_4px_4px_rgba(44,121,255,0.4)] hover:bg-[#005dff0d] transition"
+            className="mx-auto flex items-center gap-2 rounded-full border border-[#2C79FF] px-8 py-3 text-sm font-semibold shadow-[0_4px_4px_rgba(44,121,255,0.4)] hover:bg-[#005dff0d] transition cursor-pointer"
           >
             <Image src="/dashboard/icons/logout.svg" alt="" width={18} height={18} />
             Вийти
