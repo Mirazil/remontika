@@ -10,8 +10,8 @@ export default function DownButton() {
       onClick={() => router.push('/dashboard/all')}
       className="
         fixed bottom-6 left-1/2 -translate-x-1/2
-        h-12 w-12 rounded-full bg-[#dbe8ff] border-2 border-[#2C79FF]
-        flex items-center justify-center shadow-xl
+        h-12 w-12 rounded-full bg-white border-2 border-[#2C79FF]
+        flex items-center justify-center shadow-xl cursor-pointer
       "
     >
       <ChevronDown className="h-6 w-6 text-[#2C79FF]" />

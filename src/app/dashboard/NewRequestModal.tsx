@@ -119,7 +119,7 @@ const submit = async () => {
         )}
 
         {/* індикатор сторінок (прибираємо дублювання для 6-го кроку) */}
-        {data.step !== 6 && (
+        {data.step !== 7 && (
           <p className="mt-6 text-center font-semibold">
             {data.step} / 6
           </p>

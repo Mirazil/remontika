@@ -11,7 +11,7 @@ export default function PlusButton() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 h-12 w-12 rounded-full bg-[#2C79FF] text-white flex items-center justify-center shadow-xl"
+        className="fixed bottom-6 right-6 h-12 w-12 rounded-full bg-[#2C79FF] text-white flex items-center justify-center shadow-xl cursor-pointer"
       >
         <Plus className="h-6 w-6" />
       </button>

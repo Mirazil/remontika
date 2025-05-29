@@ -107,8 +107,7 @@ export default function Step5Address ({
         </button>
       </div>
 
-      {/* лічильник */}
-      <p className="mt-8 text-center text-xl font-semibold">5/6</p>
+
     </>
   )
 }
