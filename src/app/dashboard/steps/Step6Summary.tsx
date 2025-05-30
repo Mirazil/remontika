@@ -49,7 +49,7 @@ export default function Step6Summary({
 
         {data.photos.length > 0 && (
           <div className="flex items-start gap-2">
-            <span className="w-[110px] shrink-0 font-semibold">Фото:</span>
+            <span className="w-[110px] shrink-0 text-right font-semibold">Фото:</span>
             <div className="flex gap-2">
               {data.photos.map((f, i) => (
                 <img
@@ -114,8 +114,8 @@ export default function Step6Summary({
 /* ---------------------------- helper row ---------------------------- */
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex">
-      <span className="w-[110px] shrink-0 font-semibold">{label}</span>
+    <div className="flex text-right ">
+      <span className="w-[110px] mr-1 shrink-0 font-semibold">{label}</span>
       <span className="break-all">{value}</span>
     </div>
   )
