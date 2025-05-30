@@ -61,7 +61,7 @@ export default function AdminRequestCard (p:Props) {
 
   /* показувати кнопки? */
   const showReject = p.status === 'pending'
-  const showNext   = !['done','repair_done'].includes(p.status)
+  const showNext   = !['done','courier_to_client'].includes(p.status)
 
   return (
     <>

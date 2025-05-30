@@ -174,7 +174,7 @@ export default function RequestCard(r: CardProps) {
           </p>
 
           {/* кнопка підтвердження для користувача */}
-          {r.status === 'repair_done' && (
+          {r.status === 'courier_to_client' && (
             <button
               onClick={confirmDone}
               className="
