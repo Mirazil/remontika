@@ -7,7 +7,7 @@ import {
   limit, startAfter, getDocs, QueryDocumentSnapshot,
 } from 'firebase/firestore'
 import { db }             from '@/lib/firebase'
-import Spinner             from '@/components/Spinner'
+import Spinner             from '@/client/components/Spinner'
 import DoneRequestCard     from './DoneRequestCard'
 
 export type DoneDoc = {

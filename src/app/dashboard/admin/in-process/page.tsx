@@ -7,7 +7,7 @@ import {
   orderBy, onSnapshot, updateDoc, doc
 } from 'firebase/firestore'
 import { db }                       from '@/lib/firebase'
-import Spinner                      from '@/components/Spinner'
+import Spinner                      from '@/client/components/Spinner'
 import AdminRequestCard             from '../pending/AdminRequestCard'
 
 export type RequestDoc = {

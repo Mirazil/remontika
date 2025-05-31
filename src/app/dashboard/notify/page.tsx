@@ -5,8 +5,8 @@ import { useEffect, useState }        from 'react'
 import { getAuth }                    from 'firebase/auth'
 import { doc, onSnapshot, setDoc }    from 'firebase/firestore'
 import Image                          from 'next/image'
-import Spinner                        from '@/components/Spinner'
-import PrimaryButton                  from '@/components/PrimaryButton'
+import Spinner                        from '@/client/components/Spinner'
+import PrimaryButton                  from '@/client/components/PrimaryButton'
 import { db }                         from '@/lib/firebase'
 import { linkBot } from './linkBot' // ← используем утилиту
 

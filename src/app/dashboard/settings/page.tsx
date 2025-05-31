@@ -6,7 +6,7 @@ import {
 }                                       from 'firebase/auth';
 import { db }                           from '@/lib/firebase';
 import { doc, onSnapshot, setDoc }      from 'firebase/firestore';
-import Spinner                           from '@/components/Spinner';
+import Spinner                           from '@/client/components/Spinner';
 import EditFieldModal                    from './EditFieldModal';
 import ChangePasswordModal               from './ChangePasswordModal';
 

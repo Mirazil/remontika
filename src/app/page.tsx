@@ -1,18 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-import Header from '@/components/header'
-import HeroCTA from '@/components/HeroCTA'
-import BenefitItem from '@/components/BenefitItem'
-import ServiceItem from '@/components/ServiceItem'
-import StatItem from '@/components/StatItem'
-import RepairGallery from '@/components/RepairGallery'
-import Step from '@/components/step'
-import ReviewCarousel from '@/components/ReviewCarousel'
-import FaqItem from '@/components/FaqItem';
+import HeroCTA from '@/client/components/HeroCTA'
+import BenefitItem from '@/client/components/BenefitItem'
+import ServiceItem from '@/client/components/ServiceItem'
+import StatItem from '@/client/components/StatItem'
+import RepairGallery from '@/client/components/RepairGallery'
+import Step from '@/client/components/step'
+import ReviewCarousel from '@/client/components/ReviewCarousel'
+import FaqItem from '@/client/components/FaqItem';
+import HeaderClientLoader from '@/client/components/HeaderClientLoader';
 
 export default function Home() {
   return (
     <>
-      <Header />
+      <HeaderClientLoader />
       <section
         id="hero"
         className="relative flex min-h-screen items-center overflow-hidden"

@@ -15,7 +15,7 @@ import { doc, updateDoc } from 'firebase/firestore'
 import { db }             from '@/lib/firebase'
 import type { RequestDoc } from './RequestsList'
 import { JSX }            from 'react'
-import Spinner from '@/components/Spinner'
+import Spinner from '@/client/components/Spinner'
 
 /* палітра статусів */
 const PALETTE: Record<
@@ -98,9 +98,9 @@ export default function RequestCard(r: CardProps) {
           <div className="grid gap-x-8 gap-y-1 sm:grid-cols-2">
             <p>
               <b>Марка:</b> {r.brand}
-              <p>
-                <b>Модель:</b> {r.model}
-              </p>
+            </p>
+            <p>
+              <b>Модель:</b> {r.model}
             </p>
             <p>
               <b>Коментарі:</b> {r.description || "—"}

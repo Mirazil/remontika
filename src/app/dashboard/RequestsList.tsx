@@ -9,7 +9,7 @@ import {
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { db }       from '@/lib/firebase'
 import RequestCard  from './RequestCard'
-import Spinner      from '@/components/Spinner'
+import Spinner      from '@/client/components/Spinner'
 
 export type RequestDoc = {
   id:            string

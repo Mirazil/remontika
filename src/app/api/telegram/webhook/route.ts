@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/app/api/telegram/webhook/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { cert, getApps, initializeApp } from 'firebase-admin/app'

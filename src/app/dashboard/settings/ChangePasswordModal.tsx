@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useState }  from 'react';
 import { Check }     from 'lucide-react';
 import { reauthenticateWithCredential,
          EmailAuthProvider, updatePassword } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
-import ModalShell from '@/components/ModalShell';
+import { auth } from '@/client/lib/firebaseAuth';
+import ModalShell from '@/client/components/ModalShell';
 
 export default function ChangePasswordModal({ onClose }: { onClose:()=>void }) {
   const [oldPwd,setOld]   = useState('');
@@ -57,12 +58,37 @@ export default function ChangePasswordModal({ onClose }: { onClose:()=>void }) {
 }
 
 /* маленький инпут-helper */
-function Input({ph,val,set,type='text'}:{
-  ph:string,val:string,set:(s:string)=>void,type?:string}){
-  return(
-    <input required type={type} placeholder={ph}
-           className="w-80 rounded-full border border-[#2C79FF]/40 px-4 py-2
-                      text-center outline-none focus:ring-2 focus:ring-[#2C79FF]"
-           value={val} onChange={e=>set(val=>e.target.value)}/>
+function Input({
+  ph,
+  val,
+  set,
+  type = 'text'
+}: {
+  ph: string;
+  val: string;
+  set: (s: string) => void;
+  type?: string;
+}) {
+  return (
+    <input
+      required
+      type={type}
+      placeholder={ph}
+      className="w-80 rounded-full border border-[#2C79FF]/40 px-4 py-2 text-center outline-none focus:ring-2 focus:ring-[#2C79FF]"
+      value={val}
+      onChange={e => set(e.target.value)}
+    />
   );
 }
+
+
+
+// function Input({ph,val,set,type='text'}:{
+//   ph:string,val:string,set:(s:string)=>void,type?:string}){
+//   return(
+//     <input required type={type} placeholder={ph}
+//            className="w-80 rounded-full border border-[#2C79FF]/40 px-4 py-2
+//                       text-center outline-none focus:ring-2 focus:ring-[#2C79FF]"
+//            value={val} onChange={e=>set(val=>e.target.value)}/>
+//   );
+// }

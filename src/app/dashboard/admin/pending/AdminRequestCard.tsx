@@ -7,7 +7,7 @@ import clsx                 from 'clsx'
 import {
   Truck, Wrench, CheckCircle2, Ban, ArrowRight, X,
 } from 'lucide-react'
-import Spinner              from '@/components/Spinner'
+import Spinner              from '@/client/components/Spinner'
 import type { RequestDoc }  from '../in-process/page'
 import { JSX }              from 'react'
 

@@ -1,4 +1,6 @@
 // src/components/Step.tsx
+'use client'
+
 type Props = { num: string; icon: string; text: string }
 
 export default function Step({ num, icon, text }: Props) {

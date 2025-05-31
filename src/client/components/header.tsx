@@ -1,12 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import { useRouter }               from 'next/navigation'
-import { onAuthStateChanged, User } from 'firebase/auth'
 
-import { auth }      from '@/lib/firebase'
-import AuthModal     from '@/components/AuthModal'
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { auth } from '@/client/lib/firebaseAuth';
+import AuthModal from '@/client/components/AuthModal';
 
 export default function Header() {
   const [showAuth, setShowAuth] = useState(false)

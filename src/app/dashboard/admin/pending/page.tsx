@@ -12,7 +12,7 @@
 import { useEffect, useState } from 'react'
 import { collection, query, where, onSnapshot, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
-import Spinner from '@/components/Spinner'
+import Spinner from '@/client/components/Spinner'
 import AdminRequestCard from './AdminRequestCard'
 
 import type { Timestamp } from 'firebase/firestore'

@@ -1,4 +1,5 @@
 // src/components/auth/Input.tsx
+'use client'
 import React from 'react'
 
 export function Input(

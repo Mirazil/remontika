@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Check }    from 'lucide-react';
-import ModalShell   from '@/components/ModalShell';
+import ModalShell   from '@/client/components/ModalShell';
 
 type Props = {
   title     : string;

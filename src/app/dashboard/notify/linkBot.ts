@@ -1,3 +1,4 @@
+'use client'
 // утиліта: запит на бекенд + UID у BODY
 import { getAuth } from 'firebase/auth'
 

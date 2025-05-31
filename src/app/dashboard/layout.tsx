@@ -1,14 +1,14 @@
-// src/app/dashboard/layout.tsx
 'use client'
+
 
 import Image from 'next/image'
 import { ReactNode, useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { onAuthStateChanged, signOut, User } from 'firebase/auth'
-import { auth } from '@/lib/firebase'
+import { auth } from '@/client/lib/firebaseAuth'
 import '../globals.css'
 import { useIsAdmin } from '@/hooks/useIsAdmin'
-import Spinner from '@/components/Spinner'
+import Spinner from '@/client/components/Spinner'
 
 // Helper for navigation buttons
 interface NavBtnProps {

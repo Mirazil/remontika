@@ -1,3 +1,4 @@
+'use client'
 type NumberItemProps = {
   icon: string
   text: string
