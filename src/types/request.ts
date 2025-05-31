@@ -1,5 +1,7 @@
 // src/types/request.ts
-export type DeviceType = 'phone' | 'tablet' | 'console' | 'watch' | 'laptop' | 'pc'
+export type DeviceType = 'phone' | 'tablet' | 'console' | 'watch' | 'laptop' | 'pc';
+export type ContactMethod = 'telegram' | 'viber' | 'sms';
+
 
 export interface NewRequest {
   step: number
