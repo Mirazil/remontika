@@ -110,3 +110,15 @@ exports.requestStatusChanged = onDocumentUpdated(
     });
   }
 );
+// 2) Next.js SSR: Функция nextjsServer (автоматически генерируется CLI):
+//
+//    Так как вы уже сделали `firebase init hosting` с поддержкой Next.js, 
+//    Firebase CLI создал пакет `firebase-frameworks-<ваш-проект>` внутри `functions/node_modules`.
+//    Из него мы заберём конструктор серверного рендерера:
+const { nextjsServer } = require("firebase-frameworks-ssrolehrepairwebsite");
+
+// Экспортируем функцию, которую укажем в firebase.json → "rewrites": "function": "nextjsServer"
+exports.nextjsServer = onRequest({ region: "us-central1" }, (req, res) => {
+  // “nextjsServer” внутри сам дозагружает файлы из .next/ и отрендерит нужную страницу
+  return nextjsServer(req, res);
+});
