@@ -4,18 +4,15 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "public",
+    "source": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "nextjsServer"
-      }
-    ]
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
   },
   "storage": {
     "rules": "storage.rules"
@@ -29,7 +26,7 @@
         ".git",
         "firebase-debug.log",
         "firebase-debug.*.log",
-        "*.local" 
+        "*.local"
       ],
       "_predeploy": [
         "_npm --prefix \"$RESOURCE_DIR\" run lint"
