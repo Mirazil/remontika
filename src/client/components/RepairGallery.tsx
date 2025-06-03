@@ -1,15 +1,17 @@
 // src/components/RepairGallery.tsx
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import clsx from 'clsx'
 
+// Список вкладок
 const TABS = [
   { id: 'smartphones', label: 'Смартфони' },
   { id: 'notebooks',   label: 'Ноутбуки'  },
   { id: 'tablets',     label: 'Планшети'  },
 ] as const
 
+// Словарь URL-ов для каждой вкладки
 const IMAGES: Record<(typeof TABS)[number]['id'], string[]> = {
   smartphones: [
     '/images/repair_results/smartphones/brokensmart1.png',
@@ -27,6 +29,16 @@ const IMAGES: Record<(typeof TABS)[number]['id'], string[]> = {
 
 export default function RepairGallery() {
   const [active, setActive] = useState<(typeof TABS)[number]['id']>('smartphones')
+
+  // Предзагрузка изображений при первом маунте
+  useEffect(() => {
+    Object.values(IMAGES).forEach(arrayOfUrls => {
+      arrayOfUrls.forEach((src) => {
+        const img = new Image()
+        img.src = src
+      })
+    })
+  }, [])
 
   return (
     <section id="works" className="mx-auto max-w-7xl px-4 py-24 scroll-mt-8">

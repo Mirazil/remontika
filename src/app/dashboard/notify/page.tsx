@@ -9,6 +9,7 @@ import Spinner                        from '@/client/components/Spinner'
 import PrimaryButton                  from '@/client/components/PrimaryButton'
 import { db }                         from '@/lib/firebase'
 import { linkBot } from './linkBot' // ← используем утилиту
+import Fade from '@/client/components/Fade'
 
 type Method = 'telegram' | 'viber' | 'sms'
 interface ProfileExtra {
@@ -146,6 +147,9 @@ export default function NotificationsPage() {
       </div>
 
       {/* saved badge */}
+
+      <Fade show={saved} duration={300} onFadeOutComplete={() => {}}>
+
       {saved && (
         <div className="fixed bottom-8 left-1/2 -translate-x-1/2 animate-fade-in-up">
           <button
@@ -158,6 +162,7 @@ export default function NotificationsPage() {
           </button>
         </div>
       )}
+      </Fade>
     </div>
   )
 }

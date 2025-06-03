@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import HeroCTA from '@/client/components/HeroCTA'
 import BenefitItem from '@/client/components/BenefitItem'
 import ServiceItem from '@/client/components/ServiceItem'
 import StatItem from '@/client/components/StatItem'
@@ -26,7 +25,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,_rgba(255,255,255,0.8),_rgba(255,255,255,0)_55%)]" />
 
         {/* контент слева */}
-        <div className="relative z-10 w-full lg:w-1/2 px-32 py-24">
+        <div className="relative z-10 w-full lg:w-1/2 px-4 py-6 lg:px-32 lg:py-24">
           <h1 className="max-w-lg text-5xl font-bold leading-tight">
             <span className="block text-[#2C79FF]">Remontika</span>
             <span className="block text-[#303030]">
@@ -314,115 +313,126 @@ export default function Home() {
         </div>
       </section>
       <section id="contacts" className="mx-auto max-w-7xl px-4 py-24">
-        <h2 className="mb-8 flex justify-center text-3xl font-extrabold text-text">
-          Контакти
-        </h2>
+  <h2 className="mb-8 flex justify-center text-3xl font-extrabold text-text">
+    Контакти
+  </h2>
 
-        {/* Обёртка для позиционирования */}
-        <div className="relative rounded-3xl overflow-visible shadow-[14px_4px_4px_rgba(0,0,0,0.1)]">
-          {/* Оверлей с контактами */}
-          <div
-            className="
-        absolute -top-12 -left-12
-        w-72  /* ширина блока с контактами */
-        bg-white rounded-2xl p-6
-        shadow-lg
-        z-10
+  <div className="relative rounded-3xl overflow-visible shadow-[14px_4px_4px_rgba(0,0,0,0.1)]">
+    {/* Оверлей с контактами: на мобильных — статично, центр, с отступом снизу; начиная с md — абсолютное позиционирование */}
+    <div
+      className="
+        w-72 bg-white rounded-2xl p-6 shadow-lg z-10
+        mx-auto mb-4
+        md:absolute md:-top-12 md:-left-12 md:mx-0 md:mb-0
       "
-          >
-            <h3 className="mb-4 flex justify-center text-xl font-bold text-text">
-              Контакти
-            </h3>
-            <ul className="space-y-3">
-              <li className="flex items-center gap-2">
-                <img
-                  src="/icons/phone.svg"
-                  alt="phone"
-                  className="h-6 w-6 rounded-full bg-[#2C79FF] p-1"
-                />
-                <span>+38 (096) 444-44-44</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <img
-                  src="/icons/location.svg"
-                  alt="location"
-                  className="h-6 w-6 rounded-full bg-[#2C79FF] p-1"
-                />
-                <span>м.Київ, вул.Солом’янська 7, ДУІКТ</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <img
-                  src="/icons/mail.svg"
-                  alt="mail"
-                  className="h-6 w-6 rounded-full bg-[#2C79FF] p-1"
-                />
-                <span>oleg@gmail.com</span>
-              </li>
-            </ul>
+    >
+      <h3 className="mb-4 flex justify-center text-xl font-bold text-text">
+        Контакти
+      </h3>
+      <ul className="space-y-3">
+        <li className="flex items-center gap-2">
+          <img
+            src="/icons/phone.svg"
+            alt="phone"
+            className="h-6 w-6 rounded-full bg-[#2C79FF] p-1"
+          />
+          <span>+38 (096) 444-44-44</span>
+        </li>
+        <li className="flex items-center gap-2">
+          <img
+            src="/icons/location.svg"
+            alt="location"
+            className="h-6 w-6 rounded-full bg-[#2C79FF] p-1"
+          />
+          <span>м.Київ, вул.Солом’янська 7, ДУІКТ</span>
+        </li>
+        <li className="flex items-center gap-2">
+          <img
+            src="/icons/mail.svg"
+            alt="mail"
+            className="h-6 w-6 rounded-full bg-[#2C79FF] p-1"
+          />
+          <span>oleg@gmail.com</span>
+        </li>
+      </ul>
 
-            <h4 className="mt-6 mb-2 flex justify-center text-lg font-semibold text-text">
-              Соц. Медіа
-            </h4>
-            <div className="flex justify-center items-center gap-4">
-              <a
-                href="https://t.me/RemontikaBot"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="/icons/telegram.svg"
-                  alt="Telegram"
-                  className="h-6 w-6"
-                />
-              </a>
-              <a
-                href="viber://chat?number=%2B380964444444"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src="/icons/viber.svg" alt="Viber" className="h-6 w-6" />
-              </a>
-            </div>
-          </div>
+      <h4 className="mt-6 mb-2 flex justify-center text-lg font-semibold text-text">
+        Соц. Медіа
+      </h4>
+      <div className="flex justify-center items-center gap-4">
+        <a
+          href="https://t.me/RemontikaBot"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="/icons/telegram.svg"
+            alt="Telegram"
+            className="h-6 w-6"
+          />
+        </a>
+        <a
+          href="viber://chat?number=%2B380964444444"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/icons/viber.svg" alt="Viber" className="h-6 w-6" />
+        </a>
+      </div>
+    </div>
 
-          {/* Кликабельныая карта */}
-          <a
-            href="https://www.google.com/maps/place/Державний+університет+інформаційно-комунікаційних+технологій+(ДУІКТ)/@50.4292635,30.4738532,17z"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="/images/map_screenshot.png"
-              alt="Map to ДУІКТ"
-              className="block w-full h-auto object-cover"
-            />
-          </a>
-        </div>
-      </section>
-      <footer className="bg-[#303030] text-white ">
-        <div className="relative mx-auto max-w-7xl px-4 py-8">
-          {/* Абсолютный контейнер: иконка сверху, текст снизу, всё вместе */}
-          <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex flex-col items-center">
-            <a href="#hero">
-              <div className="flex justify-center">
-                <img
-                  src="/images/remontika_logo.svg"
-                  alt="Remontika"
-                  className="h-12 mb-0 w-auto select-none flex justify-center"
-                />
-              </div>
-              <span className="mt-0 text-sm text-[#2C79FF] font-semibold">
+    {/* Кликабельная карта: при мобильном экране под карточкой, на десктопе остаётся на месте */}
+    <a
+      href="https://www.google.com/maps/place/Державний+університет+інформаційно-комунікаційних+технологій+(ДУІКТ)/@50.4292635,30.4738532,17z"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        src="/images/map_screenshot.png"
+        alt="Map to ДУІКТ"
+        className="block w-full h-auto object-cover"
+      />
+    </a>
+  </div>
+</section>
+
+
+      <footer className="bg-[#303030] text-white">
+        <div className="mx-auto max-w-7xl px-4 py-2">
+          {/* Используем flex-контейнер, который 
+        на мобильных (по умолчанию) располагает 
+        все элементы вертикально, 
+        а на md+ (>=768px) — горизонтально. */}
+          <div className="flex flex-col items-center justify-center md:flex-row md:justify-between">
+            {/* 1) Логотип + подпись */}
+            <a
+              href="#hero"
+              className="
+          flex flex-col items-center
+          mb-6 md:mb-0    /* на мобильных чуть снизу отступ, на MD убираем */
+        "
+            >
+              <img
+                src="/images/remontika_logo.svg"
+                alt="Remontika"
+                className="h-12 w-auto select-none"
+              />
+              <span className="mt-2 text-sm text-[#2C79FF] font-semibold">
                 Remontika
               </span>
             </a>
-          </div>
 
-          {/* 2) Текст по центру */}
-          <p className="text-center text-sm">
-            Дипломна робота студента Державного університету
-            інформаційно-комунікаційних технологій Чудакова Олега Сергійовича
-            ІСД-42
-          </p>
+            {/* 2) Основной текст футера */}
+            <p className="text-center text-sm leading-snug">
+              Дипломна робота студента Державного університету
+              <br className="block md:hidden" />{" "}
+              {/* переносим, чтобы на мобильном была аккуратно */}
+              інформаційно-комунікаційних технологій
+              <br className="block md:hidden" />{" "}
+              {/* условный перенос на смартфонах */}
+              Чудакова Олега Сергійовича ІСД-42
+            </p>
+          </div>
         </div>
       </footer>
     </>

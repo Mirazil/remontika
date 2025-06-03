@@ -54,6 +54,7 @@ export default function ProfileButton({ children }: { children: React.ReactNode 
             active:translate-y-[2px]
             shadow-[0_12px_40px_rgba(44,121,255,0.3)]
             flex items-center justify-center
+            cursor-pointer
           "
         >
           {/* Здесь мы рендерим именно {children} */}

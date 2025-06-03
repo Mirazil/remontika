@@ -31,9 +31,9 @@ export default function FaqItem({
           <span>{question}</span>
         </span>
         {isOpen ? (
-          <ChevronUp className="h-5 w-5 text-primary" />
+          <ChevronUp className="h-5 w-5 text-primary cursor-pointer" />
         ) : (
-          <ChevronDown className="h-5 w-5 text-primary" />
+          <ChevronDown className="h-5 w-5 text-primary cursor-pointer" />
         )}
       </button>
 
