@@ -1,22 +1,23 @@
-'use client'
+// src/app/dashboard/layout.tsx  (или как у вас называется DashboardLayout)
+'use client';
 
+import Image from 'next/image';
+import { ReactNode, useEffect, useState } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { auth } from '@/client/lib/firebaseAuth';
+import '../globals.css';
+import { useIsAdmin } from '@/hooks/useIsAdmin';
+import Spinner from '@/client/components/Spinner';
+import { Menu, X } from 'lucide-react'; // иконки для гамбургера и крестика
 
-import Image from 'next/image'
-import { ReactNode, useEffect, useState } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
-import { onAuthStateChanged, signOut, User } from 'firebase/auth'
-import { auth } from '@/client/lib/firebaseAuth'
-import '../globals.css'
-import { useIsAdmin } from '@/hooks/useIsAdmin'
-import Spinner from '@/client/components/Spinner'
-
-// Helper for navigation buttons
+// Helper для кнопок навигации (осталось без изменений)
 interface NavBtnProps {
-  href: string
-  icon: string
-  label: string
-  active?: boolean
-  onClick: () => void
+  href: string;
+  icon: string;
+  label: string;
+  active?: boolean;
+  onClick: () => void;
 }
 
 function NavButton({ href, icon, label, active, onClick }: NavBtnProps) {
@@ -30,44 +31,46 @@ function NavButton({ href, icon, label, active, onClick }: NavBtnProps) {
         ${active ? 'bg-[#005dff1f]' : 'bg-white hover:bg-[#005dff0d]'}
       `}
     >
-      <Image src={icon} alt="" width={20} height={20} className="shrink-0 opacity-80 group-hover:opacity-100" />
+      <Image
+        src={icon}
+        alt=""
+        width={20}
+        height={20}
+        className="shrink-0 opacity-80 group-hover:opacity-100"
+      />
       <span className="truncate">{label}</span>
     </button>
-  )
+  );
 }
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  // 1) Determine if user is admin
-  const isAdmin = useIsAdmin()
+  const isAdmin = useIsAdmin();        // проверяем, админ ли
+  const [user, setUser] = useState<User | null | undefined>(undefined);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // 2) Listen for auth state
-  const [user, setUser] = useState<User | null | undefined>(undefined)
-  const router = useRouter()
-  const pathname = usePathname()
-
+  // Слушаем состояние авторизации
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u)
+      setUser(u);
       if (!u) {
-        router.replace('/')
+        router.replace('/');
       }
-    })
-    return unsubscribe
-  }, [router])
+    });
+    return unsubscribe;
+  }, [router]);
 
-  // 3) While admin status unknown, show spinner
+  // Пока статус admin неизвестен, показываем спиннер
   if (isAdmin === null) {
-    return <Spinner />
+    return <Spinner />;
   }
-
-  // 4) While auth state initializing, render nothing
+  // Пока auth state инициализируется, ничего не рендерим
   if (user === undefined) {
-    return null
+    return null;
   }
-
-  // If not logged in, redirect handled above
   if (!user) {
-    return null
+    return null; // перенаправление вместо этого уже сделано выше
   }
 
   /* --------------------------------------------------
@@ -76,11 +79,16 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   if (isAdmin) {
     return (
       <div className="flex min-h-screen">
-        {/* ---------- sidebar ---------- */}
-        <aside className="flex w-72 flex-col border-r border-[#2C79FF] bg-white">
+        {/* ---------- sidebar (desktop only) ---------- */}
+        <aside className="hidden md:flex w-72 flex-col border-r border-[#2C79FF] bg-white">
           {/* avatar */}
           <div className="flex flex-col items-center gap-3 py-8">
-            <Image src="/dashboard/icons/profile.svg" alt="" width={48} height={48} />
+            <Image
+              src="/dashboard/icons/profile.svg"
+              alt=""
+              width={48}
+              height={48}
+            />
             <p className="font-semibold">admin</p>
           </div>
 
@@ -115,17 +123,22 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               onClick={() => signOut(auth)}
               className="mx-auto flex items-center gap-2 rounded-full border border-[#2C79FF] px-8 py-3 text-sm font-semibold shadow-[0_4px_4px_rgba(44,121,255,0.4)] hover:bg-[#005dff0d] transition"
             >
-              <Image src="/dashboard/icons/logout.svg" alt="" width={18} height={18} />
+              <Image
+                src="/dashboard/icons/logout.svg"
+                alt=""
+                width={18}
+                height={18}
+              />
               Вийти
             </button>
-            <span className="text-xs italic text-gray-400">DUIKT 2025</span>
+            <span className="text-xs italic text-gray-400">DUІKT 2025</span>
           </div>
         </aside>
 
-        {/* ---------- content ---------- */}
+        {/* ---------- контент (desktop + mobile) ---------- */}
         <main className="flex-1 overflow-y-auto p-8">{children}</main>
       </div>
-    )
+    );
   }
 
   /* --------------------------------------------------
@@ -133,14 +146,50 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
    * ------------------------------------------------*/
   return (
     <div className="flex min-h-screen">
-      <aside className="flex w-72 flex-col border-r border-[#2C79FF] bg-white">
+      {/* ------------------------------- */}
+      {/* Фон для затемнения при открытом mobileSidebarOpen */}
+      {mobileSidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/20"
+          onClick={() => setMobileSidebarOpen(false)}
+        />
+      )}
+
+      {/* ---------- sidebar (desktop и mobile-overlay) ---------- */}
+      <aside
+        className={`
+          fixed top-0 left-0 bottom-0 z-50
+          w-72 flex-col border-r border-[#2C79FF] bg-white shadow-lg
+          transform transition-transform duration-200
+          ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          md:relative md:translate-x-0 md:flex
+        `}
+      >
+        {/* Закрывающий крестик в mobile-режиме */}
+        <div className="flex items-center justify-between px-6 py-4 md:hidden">
+          <div />
+          <button
+            onClick={() => setMobileSidebarOpen(false)}
+            className="p-1 hover:bg-gray-100 rounded-md"
+            aria-label="Close sidebar"
+          >
+            <X className="h-5 w-5 text-text/70" />
+          </button>
+        </div>
+
         {/* Profile */}
         <div className="flex flex-col items-center gap-3 py-8">
-          <Image src="/dashboard/icons/profile.svg" alt="avatar" width={48} height={48} />
+          <Image
+            src="/dashboard/icons/profile.svg"
+            alt="avatar"
+            width={48}
+            height={48}
+          />
           <p className="font-semibold text-center max-w-[9rem] truncate">
             {user.displayName ?? 'Користувач'}
           </p>
         </div>
+
         {/* Navigation */}
         <nav className="flex flex-col gap-4 px-6">
           <NavButton
@@ -148,36 +197,73 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             icon="/dashboard/icons/list.svg"
             label="Мої заявки"
             active={pathname === '/dashboard'}
-            onClick={() => router.push('/dashboard')}
+            onClick={() => {
+              router.push('/dashboard');
+              setMobileSidebarOpen(false);
+            }}
           />
           <NavButton
             href="/dashboard/notify"
             icon="/dashboard/icons/notification.svg"
             label="Метод повідомлення"
             active={pathname === '/dashboard/notify'}
-            onClick={() => router.push('/dashboard/notify')}
+            onClick={() => {
+              router.push('/dashboard/notify');
+              setMobileSidebarOpen(false);
+            }}
           />
-          <NavButton 
+          <NavButton
             href="/dashboard/settings"
             icon="/dashboard/icons/settings.svg"
             label="Налаштування"
             active={pathname === '/dashboard/settings'}
-            onClick={() => router.push('/dashboard/settings')}
+            onClick={() => {
+              router.push('/dashboard/settings');
+              setMobileSidebarOpen(false);
+            }}
           />
         </nav>
+
         {/* Logout */}
         <div className="mt-auto flex flex-col items-center gap-6 p-6">
           <button
             onClick={() => signOut(auth)}
             className="mx-auto flex items-center gap-2 rounded-full border border-[#2C79FF] px-8 py-3 text-sm font-semibold shadow-[0_4px_4px_rgba(44,121,255,0.4)] hover:bg-[#005dff0d] transition cursor-pointer"
           >
-            <Image src="/dashboard/icons/logout.svg" alt="" width={18} height={18} />
+            <Image
+              src="/dashboard/icons/logout.svg"
+              alt=""
+              width={18}
+              height={18}
+            />
             Вийти
           </button>
-          <span className="text-xs italic text-gray-400">DUIKT 2025</span>
+          <span className="text-xs italic text-gray-400">DUІKT 2025</span>
         </div>
       </aside>
-      <main className="flex-1 overflow-y-auto p-8">{children}</main>
+
+      {/* ---------- контент ---------- */}
+      <main className="flex-1 overflow-y-auto">
+        {/* Верхняя панель с гамбургером (мобильный режим) */}
+        <header className="flex items-center justify-between bg-white px-4 py-3 shadow md:hidden">
+          <button
+            onClick={() => setMobileSidebarOpen(true)}
+            className="p-1 hover:bg-gray-100 rounded-md"
+            aria-label="Open sidebar"
+          >
+            <Menu className="h-6 w-6 text-text/70" />
+          </button>
+          <Image
+            src="/dashboard/icons/profile.svg"
+            alt="avatar"
+            width={32}
+            height={32}
+          />
+        </header>
+
+        {/* Сама область контента под шапкой */}
+        <div className="p-8 pt-0 md:pt-8">{children}</div>
+      </main>
     </div>
-  )
+  );
 }
