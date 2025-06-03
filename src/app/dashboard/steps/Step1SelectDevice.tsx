@@ -1,7 +1,7 @@
 /* ───────── src/app/(dashboard)/steps/Step1SelectDevice.tsx ───────── */
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, JSX } from 'react'
 import {
   Smartphone,
   Tablet,
