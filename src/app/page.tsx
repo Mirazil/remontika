@@ -8,6 +8,7 @@ import Step from '@/client/components/step'
 import ReviewCarousel from '@/client/components/ReviewCarousel'
 import FaqItem from '@/client/components/FaqItem';
 import HeaderClientLoader from '@/client/components/HeaderClientLoader';
+import ProfileButton from '@/client/components/ProfileButton'
 
 export default function Home() {
   return (
@@ -54,13 +55,16 @@ export default function Home() {
             </div>
           </div>
 
-          {/* кнопка */}
+          {/* кнопка авторизации */}
           <div className="mt-8">
-            <HeroCTA />
+            <ProfileButton>Подати заявку</ProfileButton>
           </div>
         </div>
       </section>
-      <section id="benefits" className="mx-auto max-w-7xl px-4 py-12 scroll-mt-24">
+      <section
+        id="benefits"
+        className="mx-auto max-w-7xl px-4 py-12 scroll-mt-24"
+      >
         {/* заголовок */}
         <h2 className="mb-12 text-3xl font-extrabold text-[#303030]">
           Відновимо функціональність вашого смартфону!
@@ -123,9 +127,9 @@ export default function Home() {
                 Створіть безкоштовний обліковий запис та залиште заявку!
               </p>
 
-              {/* кнопка */}
+              {/* кнопка авторизации */}
               <div className="mt-8 flex justify-center">
-                <HeroCTA />
+                <ProfileButton>Подати заявку</ProfileButton>
               </div>
             </div>
           </aside>
@@ -266,9 +270,9 @@ export default function Home() {
               />
             </div>
 
-            {/* кнопка під схемою */}
-            <div className="mt-12 flex justify-center">
-              <HeroCTA />
+            {/* кнопка авторизации */}
+            <div className="mt-8 flex justify-center">
+              <ProfileButton>Подати заявку</ProfileButton>
             </div>
           </div>
         </div>
@@ -399,12 +403,18 @@ export default function Home() {
         <div className="relative mx-auto max-w-7xl px-4 py-8">
           {/* Абсолютный контейнер: иконка сверху, текст снизу, всё вместе */}
           <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex flex-col items-center">
-            <img
-              src="/images/remontika_logo.svg"
-              alt="Remontika"
-              className="h-12 mb-0 w-auto select-none"
-            />
-            <span className="mt-0 text-sm text-[#2C79FF] font-semibold">Remontika</span>
+            <a href="#hero">
+              <div className="flex justify-center">
+                <img
+                  src="/images/remontika_logo.svg"
+                  alt="Remontika"
+                  className="h-12 mb-0 w-auto select-none flex justify-center"
+                />
+              </div>
+              <span className="mt-0 text-sm text-[#2C79FF] font-semibold">
+                Remontika
+              </span>
+            </a>
           </div>
 
           {/* 2) Текст по центру */}

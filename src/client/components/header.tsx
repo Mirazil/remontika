@@ -31,9 +31,14 @@ export default function Header() {
     <>
       <header className="fixed inset-x-0 top-0 z-40 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-
-          {/* логотип */}
-          <img src="/images/remontika_logo.svg" alt="Remontika" className="h-15"/>
+          {/* логотип + якорь */}
+          <a href="#hero">
+            <img
+              src="/images/remontika_logo.svg"
+              alt="Remontika"
+              className="h-15"
+            />
+          </a>
 
           {/* навигация */}
           <nav className="flex-1 hidden lg:flex justify-center gap-14 text-text text-lg font-light">
@@ -49,7 +54,11 @@ export default function Header() {
             onClick={handleProfileClick}
             className="ml-auto flex h-9 w-9 items-center justify-center rounded-full cursor-pointer"
           >
-            <img src="/images/my_account_button.svg" alt="account" className="h-15"/>
+            <img
+              src="/images/my_account_button.svg"
+              alt="account"
+              className="h-15"
+            />
           </button>
         </div>
       </header>
@@ -57,5 +66,5 @@ export default function Header() {
       {/* модалка авторизации */}
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
     </>
-  )
+  );
 }
