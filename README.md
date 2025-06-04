@@ -25,4 +25,5 @@ todo:
 - [x] change telegram text
 - [ ] catch bug, when user link bot and dont get any status updates
 
+- [ ] fix excess margin in orders on desktop
 - [ ] fix admin account side panel (reloading page cause bug)
