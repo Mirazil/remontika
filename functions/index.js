@@ -80,8 +80,9 @@ exports.telegramWebhook = onRequest(
         method : 'POST',
         headers: { 'content-type': 'application/json' },
         body   : JSON.stringify({
-          chat_id: msg.chat.id,
-          text   : 'Сповіщення увімкнені ✅',
+          chat_id   : msg.chat.id,
+          text      : '*Сповіщення увімкнені ✅*',
+          parse_mode: 'Markdown',
         }),
       });
 
@@ -116,18 +117,18 @@ exports.requestStatusChanged = onDocumentUpdated(
     const emoji       = STATUS_EMOJIS[after.status] || '';
 
     const base =
-      `Замовлення ${event.params.reqId.slice(-4)} ` +
-      `${after.brand} ${after.model} Оновлено!`;
+      `Замовлення *${event.params.reqId.slice(-4)}* ` +
+      `*${after.brand}* *${after.model}* Оновлено!`;
 
     let text;
     if (after.status === 'pending') {
       text =
-        'У вас підключен бот, отже ви будете отримувати сповіщення про зміну статусу! ❤️ (для відключення перейдіть у "Метод налаштування" та відключіть)\n\n' +
-        `${base}\n\nСтатус: ${statusLabel} ${emoji}`;
+        'У вас підключен бот, отже ви будете отримувати сповіщення про зміну статусу! ❤️ _(для відключення перейдіть у "Метод налаштування" та відключіть)_\n\n' +
+        `${base}\n\nСтатус: *${statusLabel}* ${emoji}`;
     } else if (after.status === 'done') {
-      text = `${base}\n\nСтатус: ${statusLabel} ${emoji}\nДякую, що ви з нами! ❤️`;
+      text = `${base}\n\nСтатус: *${statusLabel}* ${emoji}\nДякую, що ви з нами! ❤️`;
     } else {
-      text = `${base}\n\nСтатус: ${statusLabel} ${emoji}`;
+      text = `${base}\n\nСтатус: *${statusLabel}* ${emoji}`;
     }
 
     /* надсилаємо */
