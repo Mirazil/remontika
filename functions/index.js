@@ -7,9 +7,6 @@ const { getFirestore }       = require('firebase-admin/firestore');
 initializeApp();
 const db = getFirestore();
 
-/* ─────────── Gen-2 Cloud Functions ─────────── */
-const { onRequest }          = require('firebase-functions/v2/https');
-const { onDocumentUpdated }  = require('firebase-functions/v2/firestore');
 
 /* ─────────── Telegram credentials ─────────── */
 const BOT_TOKEN =
@@ -29,6 +26,16 @@ const STATUS_LABELS = {
   courier_to_client: 'Кур’єр прямує до клієнта',
   done             : 'Завершено',
 };
+
+const STATUS_EMOJIS = {
+  pending          : '⏳',
+  delivery_wait    : '📦',
+  repair           : '🔧',
+  repair_done      : '✅',
+  courier_to_client: '🚚',
+  done             : '🎉',
+};
+
 
 /* ─────────────────────────────────────────────
    1.  Web-hook  (/start <docId>)
@@ -92,11 +99,22 @@ exports.requestStatusChanged = onDocumentUpdated(
 
     /* читаємо людську назву статусу */
     const statusLabel = STATUS_LABELS[after.status] || after.status;
+    const emoji       = STATUS_EMOJIS[after.status] || '';
 
-    /* формуємо повідомлення */
-    const text =
-      `Замовлення #${event.params.reqId.slice(-4)} ` +
-      `оновлено: *${statusLabel}*`;
+    const base =
+      `Замовлення ${event.params.reqId.slice(-4)} ` +
+      `${after.brand} ${after.model} Оновлено!`;
+
+    let text;
+    if (after.status === 'pending') {
+      text =
+        'У вас підключен бот, отже ви будете отримувати сповіщення про зміну статусу! ❤️ (для відключення перейдіть у "Метод налаштування" та відключіть)\n\n' +
+        `${base}\n\nСтатус: ${statusLabel} ${emoji}`;
+    } else if (after.status === 'done') {
+      text = `${base}\n\nСтатус: ${statusLabel} ${emoji}\nДякую, що ви з нами! ❤️`;
+    } else {
+      text = `${base}\n\nСтатус: ${statusLabel} ${emoji}`;
+    }
 
     /* надсилаємо */
     await fetch(`${TG_URL}/sendMessage`, {
@@ -110,12 +128,6 @@ exports.requestStatusChanged = onDocumentUpdated(
     });
   }
 );
-// 2) Next.js SSR: Функция nextjsServer (автоматически генерируется CLI):
-//
-//    Так как вы уже сделали `firebase init hosting` с поддержкой Next.js, 
-//    Firebase CLI создал пакет `firebase-frameworks-<ваш-проект>` внутри `functions/node_modules`.
-//    Из него мы заберём конструктор серверного рендерера:
-const { nextjsServer } = require("firebase-frameworks-olehrepairwebsite");
 
 // Экспортируем функцию, которую укажем в firebase.json → "rewrites": "function": "nextjsServer"
 exports.nextjsServer = onRequest({ region: "us-central1" }, (req, res) => {
