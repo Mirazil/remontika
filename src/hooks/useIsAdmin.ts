@@ -3,7 +3,8 @@
 
 import { useEffect, useState } from 'react'
 import { doc, getDoc } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/client/lib/firebaseAuth'
 import { db } from '@/lib/firebase'
 
 /**
@@ -16,21 +17,22 @@ export function useIsAdmin(): boolean | null {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
 
   useEffect(() => {
-    const user = getAuth().currentUser
-    if (!user) {
-      setIsAdmin(false)
-      return
-    }
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        setIsAdmin(false)
+        return
+      }
 
-    const ref = doc(db, 'admins', user.uid)
-    getDoc(ref)
-      .then(snapshot => {
+      try {
+        const snapshot = await getDoc(doc(db, 'admins', user.uid))
         setIsAdmin(snapshot.exists())
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error('Ошибка проверки админа:', err)
         setIsAdmin(false)
-      })
+      }
+    })
+
+    return unsubscribe
   }, [])
 
   return isAdmin
