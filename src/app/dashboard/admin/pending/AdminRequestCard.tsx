@@ -114,7 +114,8 @@ export default function AdminRequestCard (p:Props) {
                   onClick={()=>p.onNext(p.id)}
                   className="flex items-center gap-2 rounded-full border-2
                              border-green-600 bg-green-100 px-6 py-2
-                             text-green-700 hover:bg-green-200"
+                             text-green-700 hover:bg-green-200
+                             mr-32"
                 >
                   <ArrowRight size={16}/> Наступний етап
                 </button>
