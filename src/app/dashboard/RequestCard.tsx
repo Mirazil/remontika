@@ -150,7 +150,7 @@ export default function RequestCard(r: CardProps) {
       {/* --------------------- основний вміст картки ------------------- */}
       <article
         className={clsx(
-          'relative rounded-3xl border-4 p-6 flex gap-6',
+          'relative rounded-3xl border-4 p-6 flex gap-6 flex-col sm:flex-row',
           pal.border,
           pal.bg,
           pal.shadow,
@@ -233,7 +233,7 @@ export default function RequestCard(r: CardProps) {
         )}
 
         {/* дата */}
-        <time className="absolute right-8 bottom-4 text-xs text-gray-500">
+        <time className="text-xs text-gray-500 sm:absolute sm:right-8 sm:bottom-4 mt-2 self-end">
           {r.createdAt?.toDate().toLocaleString('uk-UA', {
             day: '2-digit',
             month: '2-digit',
