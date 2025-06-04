@@ -52,7 +52,7 @@ export default function SettingsPage() {
   return (
     <>
       {/* ===== основная страница ===== */}
-      <div className="space-y-12 mt-4">
+      <div className="space-y-12 mt-4 lg:mt-0">
 
         {/* --- аккаунт --- */}
         <section className="space-y-6 rounded-[28px] border-2 border-[#2C79FF] bg-[#dbe8ff]/60 p-8 shadow-[0_4px_4px_rgba(44,121,255,0.4)]">
