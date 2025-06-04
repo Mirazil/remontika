@@ -29,4 +29,4 @@ todo:
 - [x] fix excess margin in orders on desktop
 - [x] fix mobile version of all requests for admin account
 - [x] fix dashboard/settings input form and right buttons size
-- [ ] fix admin account side panel (reloading page cause bug)
+- [x] fix admin account side panel (reloading page cause bug)

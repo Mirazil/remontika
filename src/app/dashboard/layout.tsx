@@ -81,23 +81,45 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   if (isAdmin) {
     return (
       <div className="relative flex min-h-screen">
-        {/* ---------- sidebar (desktop only) ---------- */}
+        {/* Фон для затемнения при открытом mobileSidebarOpen */}
+        {mobileSidebarOpen && (
+          <div
+            className="fixed inset-0 z-40 bg-black/20"
+            onClick={() => setMobileSidebarOpen(false)}
+          />
+        )}
+
+        {/* ---------- sidebar (desktop и mobile-overlay) ---------- */}
         <aside
-          className={`
-            hidden md:flex fixed md:relative top-0 bottom-0 z-40
-            w-72 flex-col border-r border-[#2C79FF] bg-white
-            transform transition-transform duration-200
-            ${desktopSidebarOpen ? 'translate-x-0 md:translate-x-0' : '-translate-x-full md:-translate-x-full md:absolute'}
-          `}
+          className={clsx(
+            'fixed top-0 left-0 bottom-0 z-50 w-72 flex-col border-r border-[#2C79FF] bg-white shadow-lg transform transition-transform duration-200 md:flex',
+            mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full',
+            desktopSidebarOpen ? 'md:relative md:translate-x-0' : 'md:absolute md:-translate-x-full'
+          )}
         >
           {/* Кнопка скрытия (desktop) */}
-          <button
-            onClick={() => setDesktopSidebarOpen(false)}
-            className="hidden md:block absolute top-4 right-4 rounded-md p-1 hover:bg-gray-100"
-            aria-label="Hide sidebar"
-          >
-            <ChevronLeft className="h-5 w-5 text-text/70" />
-          </button>
+          {desktopSidebarOpen && (
+            <button
+              onClick={() => setDesktopSidebarOpen(false)}
+              className="absolute top-4 right-4 hidden rounded-md p-1 hover:bg-gray-100 md:block"
+              aria-label="Hide sidebar"
+            >
+              <ChevronLeft className="h-5 w-5 text-text/70" />
+            </button>
+          )}
+
+          {/* Закрывающий крестик (mobile) */}
+          <div className="flex items-center justify-between px-6 py-4 md:hidden">
+            <div />
+            <button
+              onClick={() => setMobileSidebarOpen(false)}
+              className="p-1 hover:bg-gray-100 rounded-md"
+              aria-label="Close sidebar"
+            >
+              <X className="h-5 w-5 text-text/70" />
+            </button>
+          </div>
+
           {/* avatar */}
           <div className="flex flex-col items-center gap-3 py-8">
             <Image
@@ -116,21 +138,30 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               icon="/dashboard/icons/list.svg"
               label="Очікують підтвердження"
               active={pathname === '/dashboard/admin/pending'}
-              onClick={() => router.push('/dashboard/admin/pending')}
+              onClick={() => {
+                router.push('/dashboard/admin/pending');
+                setMobileSidebarOpen(false);
+              }}
             />
             <NavButton
               href="/dashboard/admin/in-process"
               icon="/dashboard/icons/in-process.svg"
               label="У процесі"
               active={pathname === '/dashboard/admin/in-process'}
-              onClick={() => router.push('/dashboard/admin/in-process')}
+              onClick={() => {
+                router.push('/dashboard/admin/in-process');
+                setMobileSidebarOpen(false);
+              }}
             />
             <NavButton
               href="/dashboard/admin/completed"
               icon="/dashboard/icons/completed.svg"
               label="Завершені"
               active={pathname === '/dashboard/admin/completed'}
-              onClick={() => router.push('/dashboard/admin/completed')}
+              onClick={() => {
+                router.push('/dashboard/admin/completed');
+                setMobileSidebarOpen(false);
+              }}
             />
           </nav>
 
@@ -165,7 +196,19 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
 
         {/* ---------- контент (desktop + mobile) ---------- */}
-        <main className={`flex-1 overflow-y-auto p-8 transition-[margin] duration-200 ${desktopSidebarOpen ? 'md:ml-72' : ''}`}>{children}</main>
+        <main className={`flex-1 overflow-y-auto transition-[margin] duration-200${desktopSidebarOpen ? ' md:ml-72' : ''}`}>
+          <header className="flex items-center justify-between bg-white px-4 py-3 shadow md:hidden">
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className="p-1 hover:bg-gray-100 rounded-md"
+              aria-label="Open sidebar"
+            >
+              <Menu className="h-6 w-6 text-text/70" />
+            </button>
+            <Image src="/dashboard/icons/profile.svg" alt="avatar" width={32} height={32} />
+          </header>
+          <div className="p-8 pt-0 md:pt-8">{children}</div>
+        </main>
       </div>
     );
   }
