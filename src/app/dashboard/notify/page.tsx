@@ -21,9 +21,19 @@ interface ProfileExtra {
 
 const METHODS = [
   { id: 'telegram', label: 'Telegram', icon: '/dashboard/icons/telegram.svg' },
-  { id: 'viber',    label: 'Viber',    icon: '/dashboard/icons/viber.svg'    },
-  { id: 'sms',      label: 'SMS',      icon: '/dashboard/icons/sms.svg'      },
-] satisfies { id: Method; label: string; icon: string }[]
+  {
+    id: 'viber',
+    label: 'Viber',
+    icon: '/dashboard/icons/viber.svg',
+    iconClass: 'scale-110',
+  },
+  {
+    id: 'sms',
+    label: 'SMS',
+    icon: '/dashboard/icons/sms.svg',
+    iconClass: 'scale-110',
+  },
+] satisfies { id: Method; label: string; icon: string; iconClass?: string }[]
 
 export default function NotificationsPage() {
   /* --- auth --- */
@@ -107,10 +117,10 @@ export default function NotificationsPage() {
 
   /* --- UI --- */
   return (
-    <div className="relative flex flex-col items-center gap-10">
+    <div className="relative mx-auto w-full max-w-[620px] px-4 py-8 flex flex-col items-center gap-6 sm:gap-10">
       {/* header */}
       <header className="mt-4 text-center">
-        <h1 className="mb-1 text-3xl font-bold">
+        <h1 className="mb-1 text-2xl sm:text-3xl font-bold">
           Оберіть спосіб сповіщення про стан заявок
         </h1>
         <p className="text-sm text-gray-500">
@@ -120,7 +130,7 @@ export default function NotificationsPage() {
       </header>
 
       {/* picker */}
-      <div className="flex gap-12">
+      <div className="flex flex-col items-center gap-8 sm:flex-row sm:gap-12">
         {METHODS.map((m) => (
           <button
             key={m.id}
@@ -134,8 +144,14 @@ export default function NotificationsPage() {
               }
             `}
           >
-            <Image src={m.icon} alt="" width={120} height={120} />
-            <span className="text-xl font-semibold">{m.label}</span>
+            <Image
+              src={m.icon}
+              alt=""
+              width={120}
+              height={120}
+              className={`w-16 h-16 sm:w-[120px] sm:h-[120px] object-contain ${m.iconClass ?? ''}`}
+            />
+            <span className="text-lg sm:text-xl font-semibold">{m.label}</span>
           </button>
         ))}
       </div>
@@ -159,7 +175,7 @@ export default function NotificationsPage() {
           Бот: {prof.tgChatId ? "підключено ✅" : "не підключено ❌"}
         </p>
 
-        <div className="flex justify-center gap-6">
+        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
           <PrimaryButton
             onClick={handleLinkBot}
             /* Однажды задаём disabled: */
