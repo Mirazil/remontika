@@ -8,7 +8,7 @@ All source code, configuration files, and deployment scripts can be found here. 
 
 
 todo:
-1. add background blurred shadow for all elements
+1. ~~add background blurred shadow for all elements~~
 2. add to dashboard/notify red "delete link" button
 3. add to 4th step add bot button
 4. hide "show all orders" button if there are no orders
@@ -16,8 +16,11 @@ todo:
 6. in "show all orders" show as many orders as screen can keep with no scroll (expect for mobile show only 4)
 7. add Spinner indication of loading after 6step 
 8. add burger button for side panel
-9. mobile version for dashboard/settings 
-10. mobile version for dashboard/notify
-11. fix small images for viber/sms buttons in mobile version
-12. mobile version for dashboard orders
-13. fix admin account side panel (reloading page cause bug)
+9. add bot link status in dashboard/notify
+10. show bot link status in steps
+11. mobile version for dashboard/settings 
+12. mobile version for dashboard/notify
+13. fix small images for viber/sms buttons in mobile version
+14. mobile version for dashboard orders
+15. change telegram text
+16. fix admin account side panel (reloading page cause bug)

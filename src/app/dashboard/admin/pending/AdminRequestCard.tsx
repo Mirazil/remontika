@@ -13,31 +13,37 @@ import { JSX }              from 'react'
 
 /* палітра / підписи статусів */
 const PALETTE: Record<string, {
-  border:string; bg:string; icon:JSX.Element; label:string
+  border:string; bg:string; icon:JSX.Element; label:string; shadow:string
 }> = {
   pending : {
     border:'border-yellow-300', bg:'bg-yellow-50/40',
-    icon:<Truck size={16}/>, label:'Очікує підтвердження'
+    icon:<Truck size={16}/>, label:'Очікує підтвердження',
+    shadow:'shadow-[0_4px_4px_rgba(253,224,71,0.4)]'
   },
   delivery_wait : {
     border:'border-blue-400', bg:'bg-blue-50/40',
-    icon:<Truck size={16}/>, label:'Очікує початку доставки'
+    icon:<Truck size={16}/>, label:'Очікує початку доставки',
+    shadow:'shadow-[0_4px_4px_rgba(96,165,250,0.4)]'
   },
   repair : {
     border:'border-blue-400', bg:'bg-blue-50/40',
-    icon:<Wrench size={16}/>, label:'Процес ремонту'
+    icon:<Wrench size={16}/>, label:'Процес ремонту',
+    shadow:'shadow-[0_4px_4px_rgba(96,165,250,0.4)]'
   },
   repair_done : {
     border:'border-green-400', bg:'bg-green-50/40',
-    icon:<Wrench size={16}/>, label:'Ремонт завершено'
+    icon:<Wrench size={16}/>, label:'Ремонт завершено',
+    shadow:'shadow-[0_4px_4px_rgba(74,222,128,0.4)]'
   },
   courier_to_client : {
     border:'border-green-400', bg:'bg-green-50/40',
-    icon:<Truck size={16}/>, label:'Кур’єр прямує до клієнта'
+    icon:<Truck size={16}/>, label:'Кур’єр прямує до клієнта',
+    shadow:'shadow-[0_4px_4px_rgba(74,222,128,0.4)]'
   },
   done : {
     border:'border-green-400', bg:'',
-    icon:<CheckCircle2 size={16}/>, label:'Завершено'
+    icon:<CheckCircle2 size={16}/>, label:'Завершено',
+    shadow:'shadow-[0_4px_4px_rgba(74,222,128,0.4)]'
   },
 }
 
@@ -70,6 +76,7 @@ export default function AdminRequestCard (p:Props) {
         className={clsx(
           'relative rounded-3xl border-4 p-6 flex gap-6',
           palette.border, palette.bg,
+          palette.shadow,
         )}
       >
 

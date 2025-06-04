@@ -9,6 +9,7 @@ export default function DoneRequestCard (d: DoneDoc) {
     <article
       className={clsx(
         "rounded-full border-2 border-green-500/70 bg-green-50/40",
+        "shadow-[0_4px_4px_rgba(34,197,94,0.4)]",
         "px-6 py-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-8"
       )}
     >
