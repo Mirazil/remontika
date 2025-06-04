@@ -9,7 +9,8 @@ import { auth } from '@/client/lib/firebaseAuth';
 import '../globals.css';
 import { useIsAdmin } from '@/hooks/useIsAdmin';
 import Spinner from '@/client/components/Spinner';
-import { Menu, X } from 'lucide-react'; // иконки для гамбургера и крестика
+import { Menu, X, ChevronLeft, ChevronRight } from 'lucide-react'; // иконки для бургер меню и стрелок
+import clsx from 'clsx';
 
 // Helper для кнопок навигации (осталось без изменений)
 interface NavBtnProps {
@@ -47,6 +48,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const isAdmin = useIsAdmin();        // проверяем, админ ли
   const [user, setUser] = useState<User | null | undefined>(undefined);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [desktopSidebarOpen, setDesktopSidebarOpen] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -78,9 +80,24 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
    * ------------------------------------------------*/
   if (isAdmin) {
     return (
-      <div className="flex min-h-screen">
+      <div className="relative flex min-h-screen">
         {/* ---------- sidebar (desktop only) ---------- */}
-        <aside className="hidden md:flex w-72 flex-col border-r border-[#2C79FF] bg-white">
+        <aside
+          className={`
+            hidden md:flex fixed md:relative top-0 bottom-0 z-40
+            w-72 flex-col border-r border-[#2C79FF] bg-white
+            transform transition-transform duration-200
+            ${desktopSidebarOpen ? 'translate-x-0 md:translate-x-0' : '-translate-x-full md:-translate-x-full md:absolute'}
+          `}
+        >
+          {/* Кнопка скрытия (desktop) */}
+          <button
+            onClick={() => setDesktopSidebarOpen(false)}
+            className="hidden md:block absolute top-4 right-4 rounded-md p-1 hover:bg-gray-100"
+            aria-label="Hide sidebar"
+          >
+            <ChevronLeft className="h-5 w-5 text-text/70" />
+          </button>
           {/* avatar */}
           <div className="flex flex-col items-center gap-3 py-8">
             <Image
@@ -135,8 +152,20 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
         </aside>
 
+        {/* Кнопка показа сайдбара (desktop) */}
+        {!desktopSidebarOpen && (
+          <button
+            onClick={() => setDesktopSidebarOpen(true)}
+            className="absolute left-4 top-4 hidden rounded-md border border-[#2C79FF] bg-white p-1 shadow md:block"
+            aria-label="Show sidebar"
+          >
+            <ChevronRight className="h-5 w-5 text-text/70" />
+          </button>
+        )}
+
+
         {/* ---------- контент (desktop + mobile) ---------- */}
-        <main className="flex-1 overflow-y-auto p-8">{children}</main>
+        <main className={`flex-1 overflow-y-auto p-8 transition-[margin] duration-200 ${desktopSidebarOpen ? 'md:ml-72' : ''}`}>{children}</main>
       </div>
     );
   }
@@ -145,7 +174,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
    *              REGULAR USER LAYOUT
    * ------------------------------------------------*/
   return (
-    <div className="flex min-h-screen">
+    <div className="relative flex min-h-screen">
       {/* ------------------------------- */}
       {/* Фон для затемнения при открытом mobileSidebarOpen */}
       {mobileSidebarOpen && (
@@ -157,14 +186,23 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
       {/* ---------- sidebar (desktop и mobile-overlay) ---------- */}
       <aside
-        className={`
-          fixed top-0 left-0 bottom-0 z-50
-          w-72 flex-col border-r border-[#2C79FF] bg-white shadow-lg
-          transform transition-transform duration-200
-          ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          md:relative md:translate-x-0 md:flex
-        `}
+        className={clsx(
+          'fixed top-0 left-0 bottom-0 z-50 w-72 flex-col border-r border-[#2C79FF] bg-white shadow-lg transform transition-transform duration-200 md:flex',
+          mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full',
+          desktopSidebarOpen ? 'md:relative md:translate-x-0' : 'md:absolute md:-translate-x-full'
+        )}
       >
+        {/* Кнопка скрытия сайдбара (desktop) */}
+        {desktopSidebarOpen && (
+          <button
+            onClick={() => setDesktopSidebarOpen(false)}
+            className="absolute top-4 right-4 hidden rounded-md p-1 hover:bg-gray-100 md:block"
+            aria-label="Hide sidebar"
+          >
+            <ChevronLeft className="h-5 w-5 text-text/70" />
+          </button>
+        )}
+
         {/* Закрывающий крестик в mobile-режиме */}
         <div className="flex items-center justify-between px-6 py-4 md:hidden">
           <div />
@@ -241,9 +279,20 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <span className="text-xs italic text-gray-400">DUІKT 2025</span>
         </div>
       </aside>
+      
+      {/* Кнопка показа сайдбара (desktop) */}
+      {!desktopSidebarOpen && (
+        <button
+          onClick={() => setDesktopSidebarOpen(true)}
+          className="absolute left-4 top-4 hidden rounded-md border border-[#2C79FF] bg-white p-1 shadow md:block"
+          aria-label="Show sidebar"
+        >
+          <ChevronRight className="h-5 w-5 text-text/70" />
+        </button>
+      )}
 
       {/* ---------- контент ---------- */}
-      <main className="flex-1 overflow-y-auto">
+      <main className={`flex-1 overflow-y-auto transition-[margin] duration-200 ${desktopSidebarOpen ? 'md:ml-72' : ''}`}>
         {/* Верхняя панель с гамбургером (мобильный режим) */}
         <header className="flex items-center justify-between bg-white px-4 py-3 shadow md:hidden">
           <button
