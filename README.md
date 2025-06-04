@@ -25,5 +25,6 @@ todo:
 - [x] change telegram text
 - [x] catch bug, when user link bot and dont get any status updates
 
+- [ ] fix small viber/sms icons on step3
 - [ ] fix excess margin in orders on desktop
 - [ ] fix admin account side panel (reloading page cause bug)
