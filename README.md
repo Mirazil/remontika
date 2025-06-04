@@ -20,7 +20,7 @@ todo:
 - [x] mobile version for dashboard/settings
 - [x] mobile version for dashboard/notify
 - [x] fix small images for viber/sms buttons in mobile version
-- [ ] add burger button for side panel
+- [x] add burger button for side panel
 - [ ] mobile version for dashboard orders
 - [ ] change telegram text
 - [ ] fix admin account side panel (reloading page cause bug)
