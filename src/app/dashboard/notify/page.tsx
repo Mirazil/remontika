@@ -157,21 +157,24 @@ export default function NotificationsPage() {
       </div>
 
       {/* input */}
-      <div className="w-full max-w-md space-y-6">
-        <label className="flex flex-col items-center gap-2 font-semibold">
+      <div className="w-full text-center max-w-md space-y-6">
+        <label className="flex flex-col gap-2 justify-center font-semibold">
           Вкажіть посилання чи номер телефону
-          <input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="https://t.me/…  або  +38 (067)…"
-            className="
-              w-full rounded-full border border-[#2C79FF]/60 px-6 py-2
-              text-center outline-none focus:ring-2 focus:ring-[#2C79FF]
-            "
-          />
+          <div className="flex w-full items-center gap-2">
+            <input
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="https://t.me/…  або  +38 (067)…"
+              className="
+                flex-1 rounded-full border border-[#2C79FF]/60 px-6 py-2
+                outline-none focus:ring-2 focus:ring-[#2C79FF]
+              "
+            />
+            <PrimaryButton onClick={save} className="shrink-0">Зберегти</PrimaryButton>
+          </div>
         </label>
 
-        <p className="text-center font-semibold">
+        <p className="mt-8 text-center font-semibold">
           Бот: {prof.tgChatId ? "підключено ✅" : "не підключено ❌"}
         </p>
 
@@ -225,9 +228,7 @@ export default function NotificationsPage() {
           </DangerButton>
         </div>
 
-        <div className="flex justify-center">
-          <PrimaryButton onClick={save}>Зберегти</PrimaryButton>
-        </div>
+
       </div>
 
       {/* saved badge */}
