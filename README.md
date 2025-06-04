@@ -23,7 +23,7 @@ todo:
 - [x] add burger button for side panel
 - [x] mobile version for dashboard orders
 - [x] change telegram text
-- [ ] catch bug, when user link bot and dont get any status updates
+- [x] catch bug, when user link bot and dont get any status updates
 
 - [ ] fix excess margin in orders on desktop
 - [ ] fix admin account side panel (reloading page cause bug)
