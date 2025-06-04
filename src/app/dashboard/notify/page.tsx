@@ -1,15 +1,16 @@
-// ───────── src/app/(dashboard)/notify/page.tsx ─────────
+// ───────── src/app/(shboard)/notify/page.tsx ─────────
 'use client'
 
 import { useEffect, useState }        from 'react'
 import { getAuth }                    from 'firebase/auth'
-import { doc, onSnapshot, setDoc }    from 'firebase/firestore'
+import { doc, onSnapshot, setDoc, updateDoc, deleteField }    from 'firebase/firestore'
 import Image                          from 'next/image'
 import Spinner                        from '@/client/components/Spinner'
 import PrimaryButton                  from '@/client/components/PrimaryButton'
 import { db }                         from '@/lib/firebase'
 import { linkBot } from './linkBot' // ← используем утилиту
 import Fade from '@/client/components/Fade'
+import DangerButton from '@/client/components/DangerButton'
 
 type Method = 'telegram' | 'viber' | 'sms'
 interface ProfileExtra {
@@ -35,6 +36,7 @@ export default function NotificationsPage() {
   const [value , setValue ] = useState('')
   const [saved , setSaved ] = useState(false)
   const [linking, setLinking] = useState(false)
+  const [unlinking, setUnlinking] = useState(false)
 
   /* --- subscribe users/{uid} --- */
   useEffect(() => {
@@ -85,6 +87,22 @@ export default function NotificationsPage() {
       setLinking(false)
     }
   }
+  /* --- unlink bot --- */
+  const handleUnlinkBot = async () => {
+    if (!prof?.tgChatId) return
+    try {
+      setUnlinking(true)
+      await updateDoc(doc(db, 'users', user.uid), { tgChatId: deleteField() })
+    } catch (e) {
+      console.error(e)
+      alert('Не вдалося видалити зв\'язок. Спробуйте пізніше.')
+    } finally {
+      setUnlinking(false)
+    }
+  }
+
+  const linkDisabled   = linking   || method !== 'telegram' || !!prof.tgChatId
+  const unlinkDisabled = unlinking || method !== 'telegram' || !prof.tgChatId
 
   /* --- UI --- */
   return (
@@ -95,22 +113,27 @@ export default function NotificationsPage() {
           Оберіть спосіб сповіщення про стан заявок
         </h1>
         <p className="text-sm text-gray-500">
-          На обраний месенджер ви будете отримувати сповіщення щодо зміни&nbsp;стану
+          На обраний месенджер ви будете отримувати сповіщення щодо
+          зміни&nbsp;стану
         </p>
       </header>
 
       {/* picker */}
       <div className="flex gap-12">
-        {METHODS.map(m => (
+        {METHODS.map((m) => (
           <button
             key={m.id}
             onClick={() => setMethod(m.id)}
             className={`
               flex flex-col items-center gap-4 rounded-2xl p-6 transition
-              ${method === m.id ? 'bg-[#dbe8ff] scale-105 shadow' : 'hover:bg-[#eef4ff]'}
+              ${
+                method === m.id
+                  ? "bg-[#dbe8ff] scale-105 shadow"
+                  : "hover:bg-[#eef4ff]"
+              }
             `}
           >
-            <Image src={m.icon} alt="" width={120} height={120}/>
+            <Image src={m.icon} alt="" width={120} height={120} />
             <span className="text-xl font-semibold">{m.label}</span>
           </button>
         ))}
@@ -122,7 +145,7 @@ export default function NotificationsPage() {
           Вкажіть посилання чи номер телефону
           <input
             value={value}
-            onChange={e => setValue(e.target.value)}
+            onChange={(e) => setValue(e.target.value)}
             placeholder="https://t.me/…  або  +38 (067)…"
             className="
               w-full rounded-full border border-[#2C79FF]/60 px-6 py-2
@@ -131,17 +154,52 @@ export default function NotificationsPage() {
           />
         </label>
 
-        <div className="flex justify-center gap-6">
-          <PrimaryButton
-            onClick={handleLinkBot}
-            disabled={linking || method !== 'telegram' || !!prof.tgChatId}
-            className={method !== 'telegram' ? 'opacity-40 cursor-not-allowed' : ''}
-          >
-            {linking
-              ? <span className="flex h-5 w-5 animate-spin border-2 border-white/40 border-t-white rounded-full" />
-              : prof.tgChatId ? 'Бот підʼєднаний' : 'Підключити бота'}
-          </PrimaryButton>
+        <p className="text-center font-semibold">
+          Бот: {prof.tgChatId ? "підключено ✅" : "не підключено ❌"}
+        </p>
 
+<div className="flex justify-center gap-6">
+  <PrimaryButton
+    onClick={handleLinkBot}
+    /* Однажды задаём disabled: */
+    disabled={ linking || method !== 'telegram' || !!prof.tgChatId || linkDisabled }
+    /* Однажды задаём className, включая стили для disabled: */
+    className={`
+      disabled:opacity-40
+      disabled:cursor-not-allowed
+      ${method !== 'telegram' ? 'opacity-40 cursor-not-allowed' : ''}
+    `}
+  >
+    {
+      linking
+        ? (
+          <span
+            className="
+              flex h-5 w-5
+              animate-spin
+              border-2 border-white/40 border-t-white
+              rounded-full
+            "
+          />
+        )
+        : prof.tgChatId
+          ? 'Бот підʼєднаний'
+          : 'Підключити бота'
+    }
+  </PrimaryButton>
+
+          <DangerButton
+            onClick={handleUnlinkBot}
+            disabled={unlinkDisabled}
+            className={`disabled:opacity-40 disabled:cursor-not-allowed ${method !== 'telegram' || !prof.tgChatId ? 'opacity-40 cursor-not-allowed' : ''}`}
+          >
+            {unlinking
+              ? <span className="flex h-5 w-5 animate-spin border-2 border-white/40 border-t-white rounded-full" />
+              : 'Відʼєднати бота'}
+          </DangerButton>
+        </div>
+
+        <div className="flex justify-center">
           <PrimaryButton onClick={save}>Зберегти</PrimaryButton>
         </div>
       </div>
@@ -149,20 +207,20 @@ export default function NotificationsPage() {
       {/* saved badge */}
 
       <Fade show={saved} duration={300} onFadeOutComplete={() => {}}>
-
-      {saved && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 animate-fade-in-up">
-          <button
-            disabled
-            className="
+        {saved && (
+          <div className="fixed bottom-8 left-1/2 -translate-x-1/2 animate-fade-in-up">
+            <button
+              disabled
+              className="
               rounded-full border-2 border-[#2C79FF] bg-[#dbe8ff]/60
               px-8 py-2 font-semibold text-[#2C79FF] shadow
-            ">
-            Збережено
-          </button>
-        </div>
-      )}
+            "
+            >
+              Збережено
+            </button>
+          </div>
+        )}
       </Fade>
     </div>
-  )
+  );
 }
