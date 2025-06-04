@@ -292,7 +292,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       )}
 
       {/* ---------- контент ---------- */}
-      <main className={`flex-1 overflow-y-auto transition-[margin] duration-200 ${desktopSidebarOpen ? 'md:ml-72' : ''}`}>
+      <main className={`flex-1 overflow-y-auto transition-[margin] duration-200 ${desktopSidebarOpen ? 'md:ml-22' : ''}`}>
         {/* Верхняя панель с гамбургером (мобильный режим) */}
         <header className="flex items-center justify-between bg-white px-4 py-3 shadow md:hidden">
           <button
