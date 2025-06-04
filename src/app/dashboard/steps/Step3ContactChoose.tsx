@@ -16,10 +16,27 @@ interface Props {
 }
 
 /* ті самі svg-іконки, що й у /notifications */
-const METHODS: { id: ContactMethod; label: string; icon: string }[] = [
+interface Method {
+  id: ContactMethod
+  label: string
+  icon: string
+  iconClass?: string
+}
+
+const METHODS: Method[] = [
   { id: 'telegram', label: 'Telegram', icon: '/dashboard/icons/telegram.svg' },
-  { id: 'viber',    label: 'Viber',    icon: '/dashboard/icons/viber.svg'    },
-  { id: 'sms',      label: 'SMS',      icon: '/dashboard/icons/sms.svg'      },
+  {
+    id: 'viber',
+    label: 'Viber',
+    icon: '/dashboard/icons/viber.svg',
+    iconClass: 'scale-110',
+  },
+  {
+    id: 'sms',
+    label: 'SMS',
+    icon: '/dashboard/icons/sms.svg',
+    iconClass: 'scale-110',
+  },
 ];
 
 export default function Step3ContactChoose({ data, setData, next, back }: Props) {
@@ -50,30 +67,40 @@ export default function Step3ContactChoose({ data, setData, next, back }: Props)
   /* ---------- UI ---------- */
   return (
     <div className="relative mx-auto w-full max-w-[620px] px-10 py-12">
-      <h2 className="mb-2 text-center text-2xl font-bold">Оберіть спосіб зв’язку</h2>
+      <h2 className="mb-2 text-center text-2xl font-bold">
+        Оберіть спосіб зв’язку
+      </h2>
       <p className="-mt-1 mb-10 text-center text-sm text-[#303030]/60">
         (Стан звернення, повідомлення та інше)
       </p>
 
       <div className="mx-auto flex max-w-md justify-between gap-8">
-        {METHODS.map(m => (
+        {METHODS.map((m) => (
           <button
             key={m.id}
             type="button"
             onClick={() => choose(m.id)}
             className={`
               flex w-32 flex-col items-center gap-4 rounded-2xl p-6 transition
-              ${data.contactMethod === m.id
-                ? 'scale-105 bg-[#dbe8ff] shadow'
-                : 'hover:bg-[#eef4ff]'}
+              ${
+                data.contactMethod === m.id
+                  ? "scale-105 bg-[#dbe8ff] shadow"
+                  : "hover:bg-[#eef4ff]"
+              }
             `}
           >
-            <Image src={m.icon} alt="" width={72} height={72} />
+            <Image
+              src={m.icon}
+              alt=""
+              width={72}
+              height={72}
+              className={`w-16 h-16 object-contain ${m.iconClass ?? ""}`}
+            />
             <span
               className={
                 data.contactMethod === m.id
-                  ? 'font-semibold text-[#2C79FF]'
-                  : 'font-semibold text-[#303030]'
+                  ? "font-semibold text-[#2C79FF]"
+                  : "font-semibold text-[#303030]"
               }
             >
               {m.label}
@@ -81,6 +108,8 @@ export default function Step3ContactChoose({ data, setData, next, back }: Props)
           </button>
         ))}
       </div>
+
+      <div className="mt-12">
 
       {/* стрілки */}
       <button
@@ -100,6 +129,7 @@ export default function Step3ContactChoose({ data, setData, next, back }: Props)
       >
         <ChevronRight />
       </button>
+      </div>
     </div>
   );
 }

@@ -83,7 +83,7 @@ export default function Step6Summary({
       </div>
 
       {/* ---------------- навігація ---------------- */}
-      <form className='mt-10'
+      <form className='mt-15 w-full'
         onSubmit={(e) => {
           e.preventDefault()
           submit()

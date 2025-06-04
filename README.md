@@ -24,7 +24,7 @@ todo:
 - [x] mobile version for dashboard orders
 - [x] change telegram text
 - [x] catch bug, when user link bot and dont get any status updates
-
-- [ ] fix small viber/sms icons on step3
+- [x] fix small viber/sms icons on step3
+- [x] fix small mb in steps for mobile
 - [ ] fix excess margin in orders on desktop
 - [ ] fix admin account side panel (reloading page cause bug)

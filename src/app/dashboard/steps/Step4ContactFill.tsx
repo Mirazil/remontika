@@ -63,7 +63,7 @@ export default function Step4ContactFill({ data, setData, next, back }: Props) {
     <div className="relative mx-auto w-full max-w-[620px] px-10 py-12 text-center">
       <p className="mb-2 font-semibold">Ви обрали</p>
       <div className="mb-8 flex flex-col items-center gap-3">
-        <Image src={meta.icon} alt="" width={72} height={72}/>
+        <Image src={meta.icon} alt="" width={72} height={72} />
         <h3 className="text-xl font-bold">{meta.label}</h3>
       </div>
 
@@ -73,7 +73,9 @@ export default function Step4ContactFill({ data, setData, next, back }: Props) {
         </label>
         <input
           value={data.contactValue}
-          onChange={e => setData(p => ({ ...p, contactValue:e.target.value }))}
+          onChange={(e) =>
+            setData((p) => ({ ...p, contactValue: e.target.value }))
+          }
           placeholder={meta.placeholder}
           className="
             w-full rounded-full border border-[#2C79FF]/40 px-6 py-2
@@ -83,27 +85,29 @@ export default function Step4ContactFill({ data, setData, next, back }: Props) {
       </div>
 
       <p className="mt-4 text-center font-semibold">
-        Бот: {botConnected ? 'підключено ✅' : 'не підключено ❌'}
+        Бот: {botConnected ? "підключено ✅" : "не підключено ❌"}
       </p>
-      
-      {/* стрілки */}
-      <button
-        onClick={back}
-        className="absolute bottom-6 left-6 flex h-12 w-12 items-center
+
+      <div className="mt-12">
+        {/* стрілки */}
+        <button
+          onClick={back}
+          className="absolute bottom-6 left-6 flex h-12 w-12 items-center
                    justify-center rounded-full border-2 border-[#2C79FF]
                    text-[#2C79FF] hover:bg-[#2C79FF]/10"
-      >
-        <ChevronLeft/>
-      </button>
-      <button
-        disabled={!data.contactValue.trim()}
-        onClick={next}
-        className="absolute bottom-6 right-6 flex h-12 w-12 items-center
+        >
+          <ChevronLeft />
+        </button>
+        <button
+          disabled={!data.contactValue.trim()}
+          onClick={next}
+          className="absolute bottom-6 right-6 flex h-12 w-12 items-center
                    justify-center rounded-full bg-[#2C79FF] text-white
                    hover:bg-[#1D5CCA] disabled:opacity-40"
-      >
-        <ChevronRight/>
-      </button>
+        >
+          <ChevronRight />
+        </button>
+      </div>
     </div>
   );
 }

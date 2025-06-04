@@ -184,6 +184,8 @@ export default function Step2DeviceInfo({
         )}
       </form>
 
+      <div className="mt-12">
+
       {/* ───────── стрелка «назад» ───────── */}
       <button
         type="button"
@@ -210,6 +212,7 @@ export default function Step2DeviceInfo({
       >
         <ChevronRight />
       </button>
+      </div>
     </div>
   )
 }
