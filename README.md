@@ -31,3 +31,5 @@ todo:
 - [x] fix dashboard/settings input form and right buttons size
 - [x] fix admin account side panel (reloading page cause bug)
 - [x] fix admin account mobile version order margin
+- [ ] add /n to empty repair orders page between sentences
+- [ ] fix bug with linking telegram bot on iphones
