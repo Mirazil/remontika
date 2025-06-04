@@ -12,15 +12,16 @@ todo:
 2. ~~add to dashboard/notify red "delete link" button~~
 3. ~~add to 4th step status bar~~
 4. ~~hide "show all orders" button if there are no orders~~
-5. in "show all orders" hide uncompleted orders, show only completed
-6. in "show all orders" show as many orders as screen can keep with no scroll (expect for mobile show only 4)
+5. ~~in "show all orders" hide uncompleted orders, show only completed~~
+6. ~~in "show all orders" show as many orders as screen can keep with no scroll~~
 7. add Spinner indication of loading after 6step 
 8. add burger button for side panel
 9. add bot link status in dashboard/notify
 10. show bot link status in steps
-11. mobile version for dashboard/settings 
-12. mobile version for dashboard/notify
-13. fix small images for viber/sms buttons in mobile version
-14. mobile version for dashboard orders
-15. change telegram text
-16. fix admin account side panel (reloading page cause bug)
+11. in "show all orders" show as many orders as screen can keep with no scroll (expect for mobile show only 4)
+12. mobile version for dashboard/settings 
+13. mobile version for dashboard/notify
+14. fix small images for viber/sms buttons in mobile version
+15. mobile version for dashboard orders
+16. change telegram text
+17. fix admin account side panel (reloading page cause bug)

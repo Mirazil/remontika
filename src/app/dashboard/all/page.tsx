@@ -18,7 +18,8 @@ export default function AllRequestsPage() {
   return (
     <Fade show={isVisible} duration={300} onFadeOutComplete={() => {}}>
       <main className="px-4 py-8 max-w-7xl mx-auto">
-        <RequestsList />    {/* без limit → полный список с пагинацией */}
+        {/* показуємо лише завершені заявки */}
+        <RequestsList doneOnly />    {/* без limit → повний список з пагінацією */}
       </main>
     </Fade>
   )
