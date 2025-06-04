@@ -166,7 +166,7 @@ export default function NotificationsPage() {
               onChange={(e) => setValue(e.target.value)}
               placeholder="https://t.me/…  або  +38 (067)…"
               className="
-                flex-1 rounded-full border border-[#2C79FF]/60 px-6 py-2
+                flex-1 rounded-full border border-[#2C79FF]/60 px-6 py-2 text-center
                 outline-none focus:ring-2 focus:ring-[#2C79FF]
               "
             />
