@@ -2,18 +2,23 @@
 require('dotenv').config();
 
 /* ─────────── Firebase Admin ─────────── */
-const { initializeApp }      = require('firebase-admin/app');
-const { getFirestore }       = require('firebase-admin/firestore');
+const { initializeApp } = require('firebase-admin/app');
+const { getFirestore }  = require('firebase-admin/firestore');
 initializeApp();
 const db = getFirestore();
 
+/* ─────────── Gen-2 Cloud Functions ─────────── */
+const { onRequest }         = require('firebase-functions/v2/https');
+const { onDocumentUpdated } = require('firebase-functions/v2/firestore');
 
 /* ─────────── Telegram credentials ─────────── */
 const BOT_TOKEN =
   process.env.TELEGRAM_BOT_TOKEN ||
   (require('firebase-functions').config().telegram || {}).bot_token;
 
-if (!BOT_TOKEN) throw new Error('BOT_TOKEN missing');
+if (!BOT_TOKEN) {
+  throw new Error('BOT_TOKEN missing');
+}
 
 const TG_URL = `https://api.telegram.org/bot${BOT_TOKEN}`;
 
@@ -27,16 +32,6 @@ const STATUS_LABELS = {
   done             : 'Завершено',
 };
 
-const STATUS_EMOJIS = {
-  pending          : '⏳',
-  delivery_wait    : '📦',
-  repair           : '🔧',
-  repair_done      : '✅',
-  courier_to_client: '🚚',
-  done             : '🎉',
-};
-
-
 /* ─────────────────────────────────────────────
    1.  Web-hook  (/start <docId>)
    ───────────────────────────────────────────── */
@@ -44,17 +39,25 @@ exports.telegramWebhook = onRequest(
   { region: 'us-central1', timeoutSeconds: 60, memory: '256Mi' },
   async (req, res) => {
     try {
-      if (req.method !== 'POST') return res.status(405).send('Only POST');
+      if (req.method !== 'POST') {
+        return res.status(405).send('Only POST');
+      }
 
       const msg = req.body?.message;
-      if (!msg?.text?.startsWith('/start')) return res.sendStatus(200);
+      if (!msg?.text?.startsWith('/start')) {
+        return res.sendStatus(200);
+      }
 
       const [, docId] = msg.text.split(' ');
-      if (!docId) return res.sendStatus(200);
+      if (!docId) {
+        return res.sendStatus(200);
+      }
 
       /* одноразовый токен существует? */
       const snap = await db.doc(`tgLinkTokens/${docId}`).get();
-      if (!snap.exists) return res.sendStatus(200);
+      if (!snap.exists) {
+        return res.sendStatus(200);
+      }
 
       /* сохраняем chatId в профиле пользователя */
       const { uid } = snap.data();
@@ -80,7 +83,7 @@ exports.telegramWebhook = onRequest(
 );
 
 /* ─────────────────────────────────────────────
-   2.  Firestore-триггер: оновлення статусу
+   2.  Firestore-триггер: обновление статуса
    ───────────────────────────────────────────── */
 exports.requestStatusChanged = onDocumentUpdated(
   { region: 'us-central1', document: 'requests/{reqId}' },
@@ -129,8 +132,21 @@ exports.requestStatusChanged = onDocumentUpdated(
   }
 );
 
-// Экспортируем функцию, которую укажем в firebase.json → "rewrites": "function": "nextjsServer"
-exports.nextjsServer = onRequest({ region: "us-central1" }, (req, res) => {
-  // “nextjsServer” внутри сам дозагружает файлы из .next/ и отрендерит нужную страницу
-  return nextjsServer(req, res);
+/* ─────────────────────────────────────────────
+   3.  Next.js-функция (ручная конфигурация без firebase-frameworks)
+   ───────────────────────────────────────────── */
+const next = require('next');
+const dev = false; // в продакшене выставляем false
+const app = next({
+  dev,
+  // путь к собранным файлам .next (сборка Next.js идёт в корень проекта, поэтому ../.next)
+  conf: { distDir: '../.next' }
 });
+const handle = app.getRequestHandler();
+
+exports.nextjsServer = onRequest(
+  { region: 'us-central1' },
+  (req, res) => {
+    return app.prepare().then(() => handle(req, res));
+  }
+);

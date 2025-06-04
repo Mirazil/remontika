@@ -22,5 +22,7 @@ todo:
 - [x] fix small images for viber/sms buttons in mobile version
 - [x] add burger button for side panel
 - [x] mobile version for dashboard orders
-- [ ] change telegram text
+- [x] change telegram text
+- [ ] catch bug, when user link bot and dont get any status updates
+
 - [ ] fix admin account side panel (reloading page cause bug)
