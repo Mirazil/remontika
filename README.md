@@ -8,7 +8,7 @@ All source code, configuration files, and deployment scripts can be found here. 
 
 
 todo:
-[x] add background blurred shadow for all elements
+- [x] add background blurred shadow for all elements
 2. add to dashboard/notify red "delete link" button
 3. add to 4th step status bar
 4. hide "show all orders" button if there are no orders
