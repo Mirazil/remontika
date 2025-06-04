@@ -87,7 +87,7 @@ export default function Header() {
           {/* Кнопка профиль / вход */}
           <button
             onClick={handleProfileClick}
-            className="ml-4 flex h-9 w-9 items-center justify-center rounded-full hover:bg-gray-100 cursor-pointer"
+            className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-gray-100 cursor-pointer"
             aria-label="Profile or Login"
           >
             <img
