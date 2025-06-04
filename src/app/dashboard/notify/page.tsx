@@ -170,8 +170,13 @@ export default function NotificationsPage() {
                 outline-none focus:ring-2 focus:ring-[#2C79FF]
               "
             />
-            <PrimaryButton onClick={save} className="shrink-0">Зберегти</PrimaryButton>
           </div>
+            <PrimaryButton
+              onClick={save}
+              className="shrink-0 px-6 py-2"
+            >
+              Зберегти
+            </PrimaryButton>
         </label>
 
         <p className="mt-8 text-center font-semibold">
