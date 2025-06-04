@@ -16,12 +16,11 @@ todo:
 - [x] in "show all orders" show as many orders as screen can keep with no scroll
 - [x] add bot link status in dashboard/notify
 - [x] show bot link status in steps
-- [x] add Spinner indication of loading after 6step 
-- [ ] add burger button for side panel
-- [ ] mobile version for dashboard/settings 
+- [x] add Spinner indication of loading after 6step
+- [x] mobile version for dashboard/settings
 - [ ] mobile version for dashboard/notify
-- [ ] in "show all orders" show as many orders as screen can keep with no scroll (expect for mobile show only 4)
 - [ ] fix small images for viber/sms buttons in mobile version
 - [ ] mobile version for dashboard orders
 - [ ] change telegram text
+- [ ] add burger button for side panel
 - [ ] fix admin account side panel (reloading page cause bug)

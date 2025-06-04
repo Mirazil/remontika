@@ -52,13 +52,13 @@ export default function SettingsPage() {
   return (
     <>
       {/* ===== основная страница ===== */}
-      <div className="space-y-12">
+      <div className="space-y-12 mt-4">
 
         {/* --- аккаунт --- */}
         <section className="space-y-6 rounded-[28px] border-2 border-[#2C79FF] bg-[#dbe8ff]/60 p-8 shadow-[0_4px_4px_rgba(44,121,255,0.4)]">
           <h2 className="text-2xl font-bold">Мій акаунт Remontika</h2>
 
-          <div className="grid grid-cols-3 gap-6 text-sm">
+          <div className="grid grid-cols-1 gap-6 text-sm sm:grid-cols-3">
             <Field
               label="Логін (імʼя)"
               value={user.displayName ?? '—'}
