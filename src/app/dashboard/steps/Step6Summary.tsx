@@ -6,6 +6,7 @@ import {
   Check,
 } from 'lucide-react'
 import type { NewRequest } from '@/types/request'
+import Spinner from '@/client/components/Spinner'
 
 interface Props {
   data: NewRequest
@@ -32,6 +33,14 @@ export default function Step6Summary({
     watch: 'розумний годинник',
     laptop: 'ноутбук',
     pc: 'компʼютер',
+  }
+
+    if (loading) {
+    return (
+      <div className="relative mx-auto w-full max-w-[620px] px-10 py-12">
+        <Spinner />
+      </div>
+    )
   }
 
   return (
