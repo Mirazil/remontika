@@ -399,18 +399,13 @@ export default function Home() {
 
       <footer className="bg-[#303030] text-white">
         <div className="mx-auto max-w-7xl px-4 py-2">
-          {/* Используем flex-контейнер, который 
-        на мобильных (по умолчанию) располагает 
-        все элементы вертикально, 
-        а на md+ (>=768px) — горизонтально. */}
-          <div className="flex flex-col items-center justify-center md:flex-row md:justify-between">
+          {/* Используем flex-контейнер, который на мобильных располагает
+          элементы вертикально, а на md+ (>=768px) — горизонтально. */}
+          <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
             {/* 1) Логотип + подпись */}
             <a
               href="#hero"
-              className="
-          flex flex-col items-center
-          mb-6 md:mb-0    /* на мобильных чуть снизу отступ, на MD убираем */
-        "
+              className="flex flex-col items-center"
             >
               <img
                 src="/images/remontika_logo.svg"
@@ -422,8 +417,17 @@ export default function Home() {
               </span>
             </a>
 
-            {/* 2) Основной текст футера */}
-            <p className="text-center text-sm leading-snug">
+            {/* 2) Навигация сайта */}
+            <nav className="flex flex-wrap justify-center gap-4 text-sm">
+              <a href="#benefits" className="hover:text-[#2C79FF]">Про нас</a>
+              <a href="#services" className="hover:text-[#2C79FF]">Перелік ремонту</a>
+              <a href="#works" className="hover:text-[#2C79FF]">Приклад робіт</a>
+              <a href="#reviews" className="hover:text-[#2C79FF]">Відгуки</a>
+              <a href="#contacts" className="hover:text-[#2C79FF]">Контакти</a>
+            </nav>
+
+            {/* 3) Основной текст футера */}
+            <p className="text-center text-sm leading-snug md:text-right">
               Дипломна робота студента Державного університету
               <br className="block md:hidden" />{" "}
               {/* переносим, чтобы на мобильном была аккуратно */}
