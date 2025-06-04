@@ -27,6 +27,6 @@ todo:
 - [x] fix small viber/sms icons on step3
 - [x] fix small mb in steps for mobile
 - [x] fix excess margin in orders on desktop
-- [ ] fix mobile version of all requests for admin account
+- [x] fix mobile version of all requests for admin account
 - [ ] fix dashboard/settings input form and right buttons size
 - [ ] fix admin account side panel (reloading page cause bug)
