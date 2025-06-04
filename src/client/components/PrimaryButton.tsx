@@ -9,7 +9,7 @@ export default function PrimaryButton({ children, className = '', ...rest }: But
     <button
       {...rest}
       className={
-        `relative inline-block rounded-[22px] bg-[#2C79FF] px-12 py-4 text-white font-semibold
+        `relative inline-block rounded-[22px] bg-[#2C79FF] px-12 py-4 text-white font-semibold whitespace-nowrap
          transition-transform duration-150 active:translate-y-[3px] ${className}`
       }
     >

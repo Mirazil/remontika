@@ -9,9 +9,9 @@ All source code, configuration files, and deployment scripts can be found here. 
 
 todo:
 1. ~~add background blurred shadow for all elements~~
-2. add to dashboard/notify red "delete link" button
-3. add to 4th step add bot button
-4. hide "show all orders" button if there are no orders
+2. ~~add to dashboard/notify red "delete link" button~~
+3. ~~add to 4th step status bar~~
+4. ~~hide "show all orders" button if there are no orders~~
 5. in "show all orders" hide uncompleted orders, show only completed
 6. in "show all orders" show as many orders as screen can keep with no scroll (expect for mobile show only 4)
 7. add Spinner indication of loading after 6step 

@@ -87,6 +87,7 @@ export default function NotificationsPage() {
       setLinking(false)
     }
   }
+
   /* --- unlink bot --- */
   const handleUnlinkBot = async () => {
     if (!prof?.tgChatId) return
@@ -158,44 +159,53 @@ export default function NotificationsPage() {
           Бот: {prof.tgChatId ? "підключено ✅" : "не підключено ❌"}
         </p>
 
-<div className="flex justify-center gap-6">
-  <PrimaryButton
-    onClick={handleLinkBot}
-    /* Однажды задаём disabled: */
-    disabled={ linking || method !== 'telegram' || !!prof.tgChatId || linkDisabled }
-    /* Однажды задаём className, включая стили для disabled: */
-    className={`
+        <div className="flex justify-center gap-6">
+          <PrimaryButton
+            onClick={handleLinkBot}
+            /* Однажды задаём disabled: */
+            disabled={
+              linking ||
+              method !== "telegram" ||
+              !!prof.tgChatId ||
+              linkDisabled
+            }
+            /* Однажды задаём className, включая стили для disabled: */
+            className={`
       disabled:opacity-40
       disabled:cursor-not-allowed
-      ${method !== 'telegram' ? 'opacity-40 cursor-not-allowed' : ''}
+      ${method !== "telegram" ? "opacity-40 cursor-not-allowed" : ""}
     `}
-  >
-    {
-      linking
-        ? (
-          <span
-            className="
+          >
+            {linking ? (
+              <span
+                className="
               flex h-5 w-5
               animate-spin
               border-2 border-white/40 border-t-white
               rounded-full
             "
-          />
-        )
-        : prof.tgChatId
-          ? 'Бот підʼєднаний'
-          : 'Підключити бота'
-    }
-  </PrimaryButton>
+              />
+            ) : prof.tgChatId ? (
+              "Бот підʼєднаний"
+            ) : (
+              "Підключити бота"
+            )}
+          </PrimaryButton>
 
           <DangerButton
             onClick={handleUnlinkBot}
             disabled={unlinkDisabled}
-            className={`disabled:opacity-40 disabled:cursor-not-allowed ${method !== 'telegram' || !prof.tgChatId ? 'opacity-40 cursor-not-allowed' : ''}`}
+            className={`disabled:opacity-40 disabled:cursor-not-allowed ${
+              method !== "telegram" || !prof.tgChatId
+                ? "opacity-40 cursor-not-allowed"
+                : ""
+            }`}
           >
-            {unlinking
-              ? <span className="flex h-5 w-5 animate-spin border-2 border-white/40 border-t-white rounded-full" />
-              : 'Відʼєднати бота'}
+            {unlinking ? (
+              <span className="flex h-5 w-5 animate-spin border-2 border-white/40 border-t-white rounded-full" />
+            ) : (
+              "Відʼєднати бота"
+            )}
           </DangerButton>
         </div>
 

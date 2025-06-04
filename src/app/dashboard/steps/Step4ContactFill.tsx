@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect }      from 'react'
+import { useEffect, useState } from 'react'
 import Image              from 'next/image'
 import { getAuth }        from 'firebase/auth'
 import { doc, getDoc }    from 'firebase/firestore'
@@ -36,24 +36,25 @@ const META: Record<ContactMethod, {
 };
 
 export default function Step4ContactFill({ data, setData, next, back }: Props) {
+  const [botConnected, setBotConnected] = useState(false)
 
   /* ---- ONE-SHOT: підставляємо value з профілю, якщо його ще нема ---- */
   useEffect(() => {
-    if (data.contactValue.trim()) return; // вже є
-    const uid = getAuth().currentUser?.uid;
-    if (!uid) return;
+    const uid = getAuth().currentUser?.uid
+    if (!uid) return
 
-    (async () => {
-      const snap = await getDoc(doc(db, 'users', uid));
+    ;(async () => {
+      const snap = await getDoc(doc(db, 'users', uid))
       if (snap.exists()) {
-        const prof = snap.data() as { notifyValue?: string };
-        if (prof.notifyValue) {
-          setData(prev => ({ ...prev, contactValue: prof.notifyValue! }));
+        const prof = snap.data() as { notifyValue?: string; tgChatId?: number }
+        if (!data.contactValue.trim() && prof.notifyValue) {
+          setData(prev => ({ ...prev, contactValue: prof.notifyValue! }))
         }
+        setBotConnected(!!prof.tgChatId)
       }
-    })();
+    })()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   const meta = data.contactMethod ? META[data.contactMethod] : null;
   if (!meta) return null; // safeguard
@@ -81,6 +82,10 @@ export default function Step4ContactFill({ data, setData, next, back }: Props) {
         />
       </div>
 
+      <p className="mt-4 text-center font-semibold">
+        Бот: {botConnected ? 'підключено ✅' : 'не підключено ❌'}
+      </p>
+      
       {/* стрілки */}
       <button
         onClick={back}
