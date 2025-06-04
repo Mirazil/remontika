@@ -10,7 +10,7 @@ export default function DoneRequestCard (d: DoneDoc) {
       className={clsx(
         "rounded-full border-2 border-green-500/70 bg-green-50/40",
         "shadow-[0_4px_4px_rgba(34,197,94,0.4)]",
-        "px-6 py-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-8"
+        "px-6 py-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-8 mt-6"
       )}
     >
       {/* левая (текст) колонка */}
@@ -37,7 +37,7 @@ export default function DoneRequestCard (d: DoneDoc) {
       </div>
 
       {/* дата справа */}
-      <time className="shrink-0 text-sm mr-8 text-gray-500 mt-auto sm:mt-1">
+      <time className="shrink-0 text-sm ml-12 sm:ml-16 sm:mr-8 text-gray-500 mt-auto sm:mt-1">
         {d.createdAt?.toDate().toLocaleString("uk-UA", {
           day: "2-digit",
           month: "2-digit",

@@ -30,3 +30,4 @@ todo:
 - [x] fix mobile version of all requests for admin account
 - [x] fix dashboard/settings input form and right buttons size
 - [x] fix admin account side panel (reloading page cause bug)
+- [x] fix admin account mobile version order margin

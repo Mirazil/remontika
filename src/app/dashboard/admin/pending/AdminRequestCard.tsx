@@ -74,7 +74,7 @@ export default function AdminRequestCard (p:Props) {
       {/* ---------------- картка ---------------- */}
       <article
         className={clsx(
-          'relative rounded-3xl border-4 p-6 flex gap-6 flex-col sm:flex-row',
+          'relative rounded-3xl border-4 p-6 flex gap-6 flex-col sm:flex-row mt-6',
           palette.border,
           palette.bg,
           palette.shadow,
