@@ -92,7 +92,7 @@ export default function RequestCard(r: CardProps) {
     return (
       <article
         className={clsx(
-          "rounded-full border-2",
+          "rounded-[10vw] sm:rounded-[10vw] md:rounded:full xl:rounded-full border-2",
           pal.border,
           pal.bg,
           pal.shadow,
