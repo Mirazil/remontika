@@ -142,8 +142,8 @@ export default function AuthModal({ onClose }: Props) {
             <button
               className={
                 tab === 'register'
-                  ? 'text-primary border-b-2 border-primary pb-1'
-                  : 'text-gray-400 pb-1'
+                  ? 'text-[#2C79FF] border-b-2 border-primary pb-1'
+                  : 'text-gray-400 border-b-2 border-transparent pb-1'
               }
               onClick={() => setTab('register')}
             >
@@ -152,8 +152,8 @@ export default function AuthModal({ onClose }: Props) {
             <button
               className={
                 tab === 'login'
-                  ? 'text-primary border-b-2 border-primary pb-1'
-                  : 'text-gray-400 pb-1'
+                  ? 'text-[#2C79FF] border-b-2 border-primary pb-1'
+                  : 'text-gray-400 border-b-2 border-transparent pb-1'
               }
               onClick={() => setTab('login')}
             >
