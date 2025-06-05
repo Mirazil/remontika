@@ -1,11 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image              from 'next/image'
 import { getAuth }        from 'firebase/auth'
-import { doc, getDoc }    from 'firebase/firestore'
+import { doc, onSnapshot, updateDoc, deleteField } from 'firebase/firestore'
 import { db }             from '@/lib/firebase'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import PrimaryButton      from '@/client/components/PrimaryButton'
+import DangerButton       from '@/client/components/DangerButton'
+import { linkBot }        from '../notify/linkBot'
 import type { NewRequest, ContactMethod } from '@/types/request'
 
 interface Props {
@@ -37,24 +40,62 @@ const META: Record<ContactMethod, {
 
 export default function Step4ContactFill({ data, setData, next, back }: Props) {
   const [botConnected, setBotConnected] = useState(false)
+  const [linking, setLinking] = useState(false)
+  const [unlinking, setUnlinking] = useState(false)
+  const inited = useRef(false)
 
-  /* ---- ONE-SHOT: підставляємо value з профілю, якщо його ще нема ---- */
+  /* ---- subscribe users/{uid} ---- */
   useEffect(() => {
     const uid = getAuth().currentUser?.uid
     if (!uid) return
 
-    ;(async () => {
-      const snap = await getDoc(doc(db, 'users', uid))
+    const ref = doc(db, 'users', uid)
+    return onSnapshot(ref, snap => {
       if (snap.exists()) {
         const prof = snap.data() as { notifyValue?: string; tgChatId?: number }
-        if (!data.contactValue.trim() && prof.notifyValue) {
+        if (!inited.current && !data.contactValue.trim() && prof.notifyValue) {
           setData(prev => ({ ...prev, contactValue: prof.notifyValue! }))
         }
+        inited.current = true
         setBotConnected(!!prof.tgChatId)
       }
-    })()
+    })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+    /* ---- link bot ---- */
+  const handleLinkBot = async () => {
+    try {
+      setLinking(true)
+      const { docId, botName } = await linkBot()
+      window.open(`https://t.me/${botName}?start=${docId}`, '_blank')
+    } catch (e) {
+      console.error(e)
+      alert('Не вдалося відкрити бота. Спробуйте пізніше.')
+    } finally {
+      setLinking(false)
+    }
+  }
+
+  /* ---- unlink bot ---- */
+  const handleUnlinkBot = async () => {
+    const uid = getAuth().currentUser?.uid
+    if (!uid || !botConnected) return
+    try {
+      setUnlinking(true)
+      await updateDoc(doc(db, 'users', uid), { tgChatId: deleteField() })
+    } catch (e) {
+      console.error(e)
+      alert('Не вдалося видалити зв\'язок. Спробуйте пізніше.')
+    } finally {
+      setUnlinking(false)
+    }
+  }
+
+  const canNext =
+    !!data.contactValue.trim() &&
+    (data.contactMethod !== 'telegram' || botConnected)
+
 
   const meta = data.contactMethod ? META[data.contactMethod] : null;
   if (!meta) return null; // safeguard
@@ -88,6 +129,37 @@ export default function Step4ContactFill({ data, setData, next, back }: Props) {
         Бот: {botConnected ? "підключено ✅" : "не підключено ❌"}
       </p>
 
+            {data.contactMethod === 'telegram' && (
+        <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
+          <PrimaryButton
+            onClick={handleLinkBot}
+            disabled={linking || botConnected}
+            className="disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {linking ? (
+              <span className="flex h-5 w-5 animate-spin border-2 border-white/40 border-t-white rounded-full" />
+            ) : botConnected ? (
+              'Бот підʼєднаний'
+            ) : (
+              'Підключити бота'
+            )}
+          </PrimaryButton>
+
+          <DangerButton
+            onClick={handleUnlinkBot}
+            disabled={unlinking || !botConnected}
+            className="disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {unlinking ? (
+              <span className="flex h-5 w-5 animate-spin border-2 border-white/40 border-t-white rounded-full" />
+            ) : (
+              'Відʼєднати бота'
+            )}
+          </DangerButton>
+        </div>
+      )}
+
+
       <div className="mt-12">
         {/* стрілки */}
         <button
@@ -99,11 +171,11 @@ export default function Step4ContactFill({ data, setData, next, back }: Props) {
           <ChevronLeft />
         </button>
         <button
-          disabled={!data.contactValue.trim()}
+          disabled={!canNext}
           onClick={next}
           className="absolute bottom-6 right-6 flex h-12 w-12 items-center
                    justify-center rounded-full bg-[#2C79FF] text-white
-                   hover:bg-[#1D5CCA] disabled:opacity-40"
+                   hover:bg-[#1D5CCA] disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <ChevronRight />
         </button>
