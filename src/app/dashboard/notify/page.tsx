@@ -9,6 +9,7 @@ import Spinner                        from '@/client/components/Spinner'
 import PrimaryButton                  from '@/client/components/PrimaryButton'
 import { db }                         from '@/lib/firebase'
 import { linkBot } from './linkBot' // ← используем утилиту
+import { v4 as uuid } from 'uuid'
 import Fade from '@/client/components/Fade'
 import DangerButton from '@/client/components/DangerButton'
 
@@ -86,10 +87,12 @@ export default function NotificationsPage() {
 
   /* --- link bot --- */
   const handleLinkBot = async () => {
+    const docId = uuid()
+    const url   = `https://t.me/RemontikaBot?start=${docId}`
+    window.open(url, '_blank')
     try {
       setLinking(true)
-      const { docId, botName } = await linkBot()   // ← uid теперь уходит в заголовок
-      window.open(`https://t.me/${botName}?start=${docId}`, '_blank')
+      await linkBot(docId)   // ← uid теперь уходит в заголовок
     } catch (e) {
       console.error(e)
       alert('Не вдалося відкрити бота. Спробуйте пізніше.')

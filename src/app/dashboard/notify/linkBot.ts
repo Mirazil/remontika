@@ -2,14 +2,14 @@
 // утиліта: запит на бекенд + UID у BODY
 import { getAuth } from 'firebase/auth'
 
-export async function linkBot(): Promise<{ docId: string; botName: string }> {
+export async function linkBot(docId: string): Promise<{ docId: string; botName: string }> {
   const user = getAuth().currentUser
   if (!user) throw new Error('not-auth')
 
   const res = await fetch('/api/telegram/link', {
     method : 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body   : JSON.stringify({ uid: user.uid }),
+    body   : JSON.stringify({ uid: user.uid, docId }),
   })
 
   if (!res.ok) {

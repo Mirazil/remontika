@@ -20,17 +20,18 @@ const BOT_NAME = process.env.TG_BOT_NAME as string
 export async function POST(req: NextRequest) {
   try {
     /* —— розбір body —— */
-    const { uid } = await req.json() as { uid?: string }
+    const { uid, docId } = await req.json() as { uid?: string; docId?: string }
     if (!uid) return NextResponse.json({ error: 'unauth' }, { status: 401 })
 
+    const finalId = docId || uuid()
+
     /* —— одноразовий токен —— */
-    const docId = uuid()
-    await db.doc(`tgLinkTokens/${docId}`).set({
+    await db.doc(`tgLinkTokens/${finalId}`).set({
       uid,
       createdAt: Date.now(),
     })
 
-    return NextResponse.json({ docId, botName: BOT_NAME })
+    return NextResponse.json({ docId: finalId, botName: BOT_NAME })
   } catch (e) {
     console.error(e)
     return NextResponse.json({ error: 'internal' }, { status: 500 })

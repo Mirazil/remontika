@@ -9,6 +9,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import PrimaryButton      from '@/client/components/PrimaryButton'
 import DangerButton       from '@/client/components/DangerButton'
 import { linkBot }        from '../notify/linkBot'
+import { v4 as uuid }     from 'uuid'
 import type { NewRequest, ContactMethod } from '@/types/request'
 
 interface Props {
@@ -65,10 +66,12 @@ export default function Step4ContactFill({ data, setData, next, back }: Props) {
 
     /* ---- link bot ---- */
   const handleLinkBot = async () => {
+    const docId = uuid()
+    const url   = `https://t.me/RemontikaBot?start=${docId}`
+    window.open(url, '_blank')
     try {
       setLinking(true)
-      const { docId, botName } = await linkBot()
-      window.open(`https://t.me/${botName}?start=${docId}`, '_blank')
+      await linkBot(docId)
     } catch (e) {
       console.error(e)
       alert('Не вдалося відкрити бота. Спробуйте пізніше.')
