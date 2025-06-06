@@ -109,9 +109,9 @@ exports.requestStatusChanged = onDocumentUpdated(
 
     /* дістаємо chatId власника заявки */
     const userSnap = await db.doc(`users/${after.userId}`).get();
-    const { tgChatId, notifyMethod } = userSnap.data() || {};
+    const { tgChatId } = userSnap.data() || {};
 
-    if (notifyMethod !== 'telegram' || !tgChatId) return;
+    if (!tgChatId) return;
 
     /* читаємо людську назву статусу */
     const statusLabel = STATUS_LABELS[after.status] || after.status;

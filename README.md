@@ -35,3 +35,4 @@ todo:
 - [x] add /n to empty repair orders page between sentences
 - [x] add link bot button and bot status on the step 4 from dashboard/notify  
 - [x] fix bug with linking telegram bot on iphones
+- [ ] сделать кеширование всех фоток через <Image /> 
