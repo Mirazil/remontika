@@ -5,7 +5,7 @@ import Image              from 'next/image'
 import { getAuth }        from 'firebase/auth'
 import { doc, onSnapshot, updateDoc, deleteField } from 'firebase/firestore'
 import { db }             from '@/lib/firebase'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, CheckCircle2, XCircle } from 'lucide-react'
 import PrimaryButton      from '@/client/components/PrimaryButton'
 import DangerButton       from '@/client/components/DangerButton'
 import { linkBot }        from '../notify/linkBot'
@@ -128,9 +128,17 @@ export default function Step4ContactFill({ data, setData, next, back }: Props) {
         />
       </div>
 
-      <p className="mt-4 text-center font-semibold">
-        Бот: {botConnected ? "підключено ✅" : "не підключено ❌"}
-      </p>
+      <div
+        className={`mt-4 mx-auto flex w-max items-center gap-2 rounded-full border-2 px-6 py-2 font-semibold shadow
+          ${botConnected
+            ? 'border-green-500 bg-green-50 text-green-700 shadow-[0_4px_4px_rgba(74,222,128,0.4)]'
+            : 'border-red-400 bg-red-50 text-red-700 shadow-[0_4px_4px_rgba(248,113,113,0.4)]'}`}
+      >
+        {botConnected ? <CheckCircle2 size={18} /> : <XCircle size={18} />}
+        <span>
+          {botConnected ? 'Бот підʼєднаний' : 'Бот не підʼєднаний'}
+        </span>
+      </div>
 
             {data.contactMethod === 'telegram' && (
         <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">

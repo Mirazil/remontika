@@ -12,6 +12,7 @@ import { linkBot } from './linkBot' // ← используем утилиту
 import { v4 as uuid } from 'uuid'
 import Fade from '@/client/components/Fade'
 import DangerButton from '@/client/components/DangerButton'
+import { CheckCircle2, XCircle } from 'lucide-react'
 
 type Method = 'telegram' | 'viber' | 'sms'
 interface ProfileExtra {
@@ -182,9 +183,17 @@ export default function NotificationsPage() {
             </PrimaryButton>
         </label>
 
-        <p className="mt-8 text-center font-semibold">
-          Бот: {prof.tgChatId ? "підключено ✅" : "не підключено ❌"}
-        </p>
+        <div
+          className={`mt-8 mx-auto flex w-max items-center gap-2 rounded-full border-2 px-6 py-2 font-semibold shadow
+            ${prof.tgChatId
+              ? 'border-green-500 bg-green-50 text-green-700 shadow-[0_4px_4px_rgba(74,222,128,0.4)]'
+              : 'border-red-400 bg-red-50 text-red-700 shadow-[0_4px_4px_rgba(248,113,113,0.4)]'}`}
+        >
+          {prof.tgChatId ? <CheckCircle2 size={18}/> : <XCircle size={18}/>}
+          <span>
+            {prof.tgChatId ? 'Бот підʼєднаний' : 'Бот не підʼєднаний'}
+          </span>
+        </div>
 
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
           <PrimaryButton
