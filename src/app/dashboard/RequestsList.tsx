@@ -4,7 +4,8 @@
 import { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import {
   collection, query, where, orderBy,
-  onSnapshot, Timestamp, limit as qLimit
+  onSnapshot, Timestamp, limit as qLimit,
+  getDoc, doc
 } from 'firebase/firestore'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { db }       from '@/lib/firebase'
@@ -46,6 +47,7 @@ export default function RequestsList(
   const [loading,     setLoading] = useState(true)
   const [pageSize,    setPageSize]= useState(MOBILE_PAGE)
   const containerRef  = useRef<HTMLDivElement>(null)
+  const [botConnected, setBotConnected] = useState(false)
 
   /* --------------------- визначаємо pageSize --------------------- */
   useLayoutEffect(() => {
@@ -81,6 +83,14 @@ export default function RequestsList(
   useEffect(() => {
     const stop = onAuthStateChanged(getAuth(), user => {
       if (!user) { setDocs([]); setLoading(false); return }
+            // check if telegram bot connected
+      getDoc(doc(db, 'users', user.uid)).then(snap => {
+        if (snap.exists()) {
+          const prof = snap.data() as { tgChatId?: number }
+          setBotConnected(!!prof.tgChatId)
+        }
+      })
+
 
       let q = query(
         collection(db, 'requests'),
@@ -108,9 +118,18 @@ export default function RequestsList(
   if (loading) return <Spinner/>
 
   if (!docs.length)
-    return <p className="pt-20 text-center text-gray-500 whitespace-pre-line">
-      Будь ласка, перед створенням першої заявки перейдіть у Метод повідомлення та підключить бота. У вас ще немає заявок 🙂
-    </p>
+    return (
+      <p className="pt-20 text-center text-gray-500">
+        {botConnected ? (
+          'У вас ще немає заявок \u{1F642}'
+        ) : (
+          <>
+            Будь ласка, перед створенням першої заявки перейдіть у Метод повідомлення та підключить бота.<br/>
+            У вас ще немає заявок 🙂
+          </>
+        )}
+      </p>
+    )
 
   return (
     <div ref={containerRef} className="relative space-y-4" data-requests-list>
