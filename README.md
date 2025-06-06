@@ -36,3 +36,5 @@ todo:
 - [x] add link bot button and bot status on the step 4 from dashboard/notify  
 - [x] fix bug with linking telegram bot on iphones
 - [ ] сделать кеширование всех фоток через <Image /> 
+- [ ] OPTIONAL пофиксить открытие увеличенного фото на карточках заяв
+- [ ] Поправить на мобилке панель с ордерами (появляется горизонтальный скролл)
