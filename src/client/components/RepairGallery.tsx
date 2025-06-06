@@ -2,6 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import clsx from 'clsx'
 
 // Список вкладок
@@ -34,7 +35,7 @@ export default function RepairGallery() {
   useEffect(() => {
     Object.values(IMAGES).forEach(arrayOfUrls => {
       arrayOfUrls.forEach((src) => {
-        const img = new Image()
+        const img = new window.Image()
         img.src = src
       })
     })
@@ -65,10 +66,12 @@ export default function RepairGallery() {
       {/* колаж */}
       <div className="grid gap-8 sm:grid-cols-2">
         {IMAGES[active].map(src => (
-          <img
+          <Image
             key={src}
             src={src}
             alt=""
+            width={600}
+            height={400}
             className="w-full rounded-[30px] object-cover"
           />
         ))}

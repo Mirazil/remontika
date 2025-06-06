@@ -1,5 +1,6 @@
 // src/components/Step.tsx
 'use client'
+import Image from 'next/image'
 
 type Props = { num: string; icon: string; text: string }
 
@@ -12,9 +13,11 @@ export default function Step({ num, icon, text }: Props) {
       {/* синій круг + іконка */}
       <div className="relative mb-3 h-24 w-24">
         <span className="absolute inset-0 rounded-full bg-[#2C79FF]" />
-        <img
+        <Image
           src={icon}
           alt=""
+          width={96}
+          height={96}
           className="relative z-10 h-full w-full object-contain p-3"
         />
       </div>

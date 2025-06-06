@@ -5,6 +5,7 @@ import {
   ChevronLeft,
   Check,
 } from 'lucide-react'
+import Image from 'next/image'
 import type { NewRequest } from '@/types/request'
 import Spinner from '@/client/components/Spinner'
 
@@ -61,10 +62,12 @@ export default function Step6Summary({
             <span className="w-[110px] shrink-0 text-right font-semibold">Фото:</span>
             <div className="flex gap-2">
               {data.photos.map((f, i) => (
-                <img
+                <Image
                   key={i}
                   src={URL.createObjectURL(f)}
                   alt={`photo-${i + 1}`}
+                  width={64}
+                  height={64}
                   className="h-16 w-16 rounded-md object-cover"
                 />
               ))}

@@ -13,6 +13,7 @@ import { auth } from '@/client/lib/firebaseAuth';
 import PrimaryButton from '@/client/components/PrimaryButton';
 import { Input } from './auth/Input';
 import { X } from 'lucide-react';
+import Image from 'next/image';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import Fade from './Fade'; // наш новый компонент
@@ -134,7 +135,7 @@ export default function AuthModal({ onClose }: Props) {
 
           {/* Логотип */}
           <div className="mb-6 flex justify-center">
-            <img src="/images/remontika_logo.svg" className="h-20" />
+            <Image src="/images/remontika_logo.svg" alt="Remontika" width={74} height={86} className="h-20" />
           </div>
 
           {/* Табы */}

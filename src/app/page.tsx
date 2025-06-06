@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from 'next/image'
 import BenefitItem from '@/client/components/BenefitItem'
 import ServiceItem from '@/client/components/ServiceItem'
 import StatItem from '@/client/components/StatItem'
@@ -39,14 +40,26 @@ export default function Home() {
           {/* иконки + кнопка */}
           <div className="mt-8 flex items-center gap-8">
             <div className="flex items-center gap-4">
-              <img src="/images/low_price_img.png" alt="" className="h-12" />
+              <Image
+                src="/images/low_price_img.png"
+                alt=""
+                width={52}
+                height={52}
+                className="h-12"
+              />
               <span className="text-sm text-[#303030]">
                 Найнижчі <br />
                 ціни
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <img src="/images/good_comp_img.png" alt="" className="h-12" />
+              <Image
+                src="/images/good_comp_img.png"
+                alt=""
+                width={52}
+                height={52}
+                className="h-12"
+              />
               <span className="text-sm text-[#303030]">
                 Якісні <br />
                 компоненти
@@ -219,9 +232,11 @@ export default function Home() {
         {/* Блок-картка з майстром нагорі */}
         <div className="relative">
           {/* Майстер, “звисає” поверх картки */}
-          <img
+          <Image
             src="/images/process/worker_header.png"
             alt=""
+            width={307}
+            height={274}
             className="
                   absolute
                   left-1/2
@@ -331,25 +346,31 @@ export default function Home() {
       </h3>
       <ul className="space-y-3">
         <li className="flex items-center gap-2">
-          <img
+          <Image
             src="/icons/phone.svg"
             alt="phone"
+            width={27}
+            height={27}
             className="h-6 w-6 rounded-full bg-[#2C79FF] p-1"
           />
           <span>+38 (096) 444-44-44</span>
         </li>
         <li className="flex items-center gap-2">
-          <img
+          <Image
             src="/icons/location.svg"
             alt="location"
+            width={30}
+            height={30}
             className="h-6 w-6 rounded-full bg-[#2C79FF] p-1"
           />
           <span>м.Київ, вул.Солом’янська 7, ДУІКТ</span>
         </li>
         <li className="flex items-center gap-2">
-          <img
+          <Image
             src="/icons/mail.svg"
             alt="mail"
+            width={30}
+            height={24}
             className="h-6 w-6 rounded-full bg-[#2C79FF] p-1"
           />
           <span>oleg@gmail.com</span>
@@ -365,9 +386,11 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
+          <Image
             src="/icons/telegram.svg"
             alt="Telegram"
+            width={38}
+            height={38}
             className="h-6 w-6"
           />
         </a>
@@ -376,7 +399,13 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="/icons/viber.svg" alt="Viber" className="h-6 w-6" />
+          <Image
+            src="/icons/viber.svg"
+            alt="Viber"
+            width={38}
+            height={38}
+            className="h-6 w-6"
+          />
         </a>
       </div>
     </div>
@@ -387,9 +416,11 @@ export default function Home() {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img
+      <Image
         src="/images/map_screenshot.png"
         alt="Map to ДУІКТ"
+        width={1104}
+        height={700}
         className="block w-full h-auto object-cover"
       />
     </a>
@@ -407,9 +438,11 @@ export default function Home() {
               href="#hero"
               className="flex flex-col items-center"
             >
-              <img
+              <Image
                 src="/images/remontika_logo.svg"
                 alt="Remontika"
+                width={74}
+                height={86}
                 className="h-12 w-auto select-none"
               />
               <span className="mt-2 text-sm text-[#2C79FF] font-semibold">

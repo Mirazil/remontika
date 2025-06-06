@@ -6,6 +6,8 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '@/client/lib/firebaseAuth';
 import AuthModal from '@/client/components/AuthModal';
 import { X, Menu } from 'lucide-react'; // иконки для закрытия и гамбургера
+import Image from 'next/image';
+
 
 export default function Header() {
   const [showAuth, setShowAuth] = useState(false);
@@ -45,9 +47,11 @@ export default function Header() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           {/* Логотип + якорь */}
           <a href="#hero">
-            <img
+            <Image
               src="/images/remontika_logo.svg"
               alt="Remontika"
+              width={74}
+              height={86}
               className="h-8 w-auto select-none"
             />
           </a>
@@ -90,9 +94,11 @@ export default function Header() {
             className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-gray-100 cursor-pointer"
             aria-label="Profile or Login"
           >
-            <img
+            <Image
               src="/images/my_account_button.svg"
               alt="account"
+              width={50}
+              height={50}
               className="h-6 w-6"
             />
           </button>

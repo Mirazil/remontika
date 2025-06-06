@@ -116,7 +116,7 @@ export default function AdminRequestCard (p:Props) {
                   className="flex items-center gap-2 rounded-full border-2
                              border-green-600 bg-green-100 px-6 py-2
                              text-green-700 hover:bg-green-200
-                             mr-32"
+                             sm:mr-32"
                 >
                   <ArrowRight size={16}/> Наступний етап
                 </button>
@@ -149,7 +149,7 @@ export default function AdminRequestCard (p:Props) {
                     alt=""
                     width={40}
                     height={40}
-                    onClick={() => openZoom(i)}
+                    onClick={() => setSelected(i)}
                     className={clsx(
                       'h-10 w-10 rounded-lg object-cover cursor-pointer',
                       i===selected && 'ring-2 ring-[#2C79FF]',
@@ -181,8 +181,11 @@ export default function AdminRequestCard (p:Props) {
         >
           {!imgLoaded && <Spinner />}
 
-          <img
+          <Image
             src={p.photos[selected]}
+            alt=""
+            width={800}
+            height={800}
             onLoad={() => setImgLoaded(true)}
             className={clsx(
               'max-h-[90vh] max-w-[90vw] rounded-lg transition-opacity',

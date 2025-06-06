@@ -1,5 +1,6 @@
 /* ───────── src/app/not-found.tsx ───────── */
 import Link from 'next/link'
+import Image from 'next/image'
 
 export const metadata = {        // ✅ чтобы в заголовке вкладки был красивый title
   title: 'Сторінку не знайдено – 404',
@@ -12,9 +13,11 @@ export default function NotFound() {
       bg-[#f7f7f7] px-4 text-center text-text
     ">
       {/* логотип */}
-      <img
+      <Image
         src="/images/remontika_logo.svg"
         alt="Remontika"
+        width={74}
+        height={86}
         className="h-28 select-none"
       />
 

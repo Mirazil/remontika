@@ -1,5 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
-'use client'
+"use client"
+import Image from 'next/image'
+
 type ServiceItemProps = {
   icon: string
   title: string
@@ -17,9 +18,11 @@ export default function ServiceItem({ icon, title }: ServiceItemProps) {
       </span>
 
       {/* Иконка */}
-      <img
+      <Image
         src={icon}
         alt={title}
+        width={100}
+        height={100}
         className="relative z-10 h-25 w-25 object-contain "
       />
     </div>

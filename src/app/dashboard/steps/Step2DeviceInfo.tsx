@@ -14,6 +14,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
+import Image from 'next/image'
 import type { NewRequest } from '@/types/request'
 
 interface Props {
@@ -160,9 +161,11 @@ export default function Step2DeviceInfo({
           <div className="flex gap-4">
             {previews.map((src, i) => (
               <div key={i} className="relative group">
-                <img
+                <Image
                   src={src}
                   alt={`preview-${i}`}
+                  width={80}
+                  height={80}
                   className="h-20 w-20 rounded-lg object-cover ring-2 ring-[#2C79FF]"
                 />
                 {/* крестик удаления */}

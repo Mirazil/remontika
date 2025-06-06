@@ -220,7 +220,7 @@ export default function RequestCard(r: CardProps) {
                     alt=""
                     width={40}
                     height={40}
-                    onClick={() => openZoom(i)}
+                    onClick={() => setSelected(i)}
                     className={clsx(
                       'h-10 w-10 rounded-lg object-cover cursor-pointer',
                       i === selected && 'ring-2 ring-[#2C79FF]',
@@ -256,8 +256,11 @@ export default function RequestCard(r: CardProps) {
       {/* spinner поки <img> не заванта­житься */}
       {!imgLoaded && <Spinner />}
 
-      <img
+      <Image
         src={r.photos[selected]}
+        alt=""
+        width={800}
+        height={800}
         onLoad={() => setImgLoaded(true)}
         className={clsx(
           'max-h-[90vh] max-w-[90vw] rounded-lg transition-opacity',
