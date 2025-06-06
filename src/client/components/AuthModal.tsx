@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { auth } from '@/client/lib/firebaseAuth';
+import { getFirebaseErrorMessage } from '@/client/lib/firebaseErrors';
 import PrimaryButton from '@/client/components/PrimaryButton';
 import { Input } from './auth/Input';
 import { X } from 'lucide-react';
@@ -61,13 +62,16 @@ export default function AuthModal({ onClose }: Props) {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(cred.user, { displayName: login });
       await setDoc(doc(db, 'users', cred.user.uid), {
+        login,
+        email,
         phone,
         address: '',
       });
       closeHandler();
       router.push('/dashboard');
     } catch (e: any) {
-      setError(e.message);
+      const code = e?.code ?? '';
+      setError(getFirebaseErrorMessage(code));
     } finally {
       setLoading(false);
     }
@@ -87,7 +91,8 @@ export default function AuthModal({ onClose }: Props) {
       closeHandler();
       router.push('/dashboard');
     } catch (e: any) {
-      setError(e.message);
+      const code = e?.code ?? '';
+      setError(getFirebaseErrorMessage(code));
     } finally {
       setLoading(false);
     }
@@ -201,7 +206,8 @@ function RegisterForm({
       <Input
         name="phone"
         type="tel"
-        placeholder="Номер телефону"
+        defaultValue=""
+        placeholder="Номер телефону +38..."
         required
       />
       <div className="flex justify-center">
